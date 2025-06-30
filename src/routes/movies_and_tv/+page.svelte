@@ -1,7 +1,13 @@
 <script lang="ts">
     import type { PageData } from './$types';
     export let data: PageData;
-
+    export let url: URL;
+    let selectedType = url?.searchParams.get('type') ?? '';
+    let selectedRes = url?.searchParams.get('resolution') ?? '';
+    let selectedFranchise = url?.searchParams.get('franchise') ?? '';
+    let selectedWatched = url?.searchParams.get('watched') ?? '';
+    let selectedLabel = url?.searchParams.get('label') ?? '';
+    let selectedSteel = url?.searchParams.get('steelbook') ?? '';
 </script>
 
 <style>
@@ -47,6 +53,57 @@
 <div class="container">
 
     <h1>List of Movies and TV Shows</h1>
+
+    <form method="get" class="filters">
+        <div>
+            <label for="type">Type:</label>
+            <select name="type" id="type" bind:value={selectedType}>
+                <option value="">All</option>
+                {#each data.types ?? [] as t}
+                <option value={t}>{t}</option>
+                {/each}
+            </select>
+            <label for="type">Resolution:</label>
+            <select name="type" id="type" bind:value={selectedRes}>
+                <option value="">All</option>
+                {#each data.res ?? [] as t}
+                <option value={t}>{t}</option>
+                {/each}
+            </select>
+            <label for="type">Franchise:</label>
+            <select name="type" id="type" bind:value={selectedFranchise}>
+                <option value="">All</option>
+                {#each data.franchises ?? [] as t}
+                <option value={t}>{t}</option>
+                {/each}
+            </select>
+            <label for="type">Watched:</label>
+            <select name="type" id="type" bind:value={selectedWatched}>
+                <option value="">All</option>
+                {#each data.watchedOptions ?? [] as t}
+                <option value={t}>{t}</option>
+                {/each}
+            </select>
+            <label for="type">Label:</label>
+            <select name="type" id="type" bind:value={selectedLabel}>
+                <option value="">All</option>
+                {#each data.labels ?? [] as t}
+                <option value={t}>{t}</option>
+                {/each}
+            </select>
+            <label for="type">Steelbook:</label>
+            <select name="type" id="type" bind:value={selectedSteel}>
+                <option value="">All</option>
+                {#each data.steelbooks ?? [] as t}
+                <option value={t}>{t}</option>
+                {/each}
+            </select>
+        </div>
+        <button type="submit">Filter</button>
+        <button type="reset" onclick={() => { selectedType = ''; }}>Reset</button>
+    </form>
+
+    <h4> {data.discs.length} results found</h4>
 
     <table>
         <thead>
