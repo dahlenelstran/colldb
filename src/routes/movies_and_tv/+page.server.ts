@@ -3,7 +3,6 @@ import { pool } from "$lib/server/db";
 
 export const load: PageServerLoad = async ({ url }) => {
     let discs: any[] = [];
-    let results: any[] = [];
     try {
 
         // Pulling filter options
@@ -26,6 +25,8 @@ export const load: PageServerLoad = async ({ url }) => {
         const watched = url.searchParams.get('watched');
         const label = url.searchParams.get('label');
         const steelbook = url.searchParams.get('steelbook');
+        const search = url.searchParams.get('search');
+        const random = url.searchParams.get('random');
 
         let query = 'SELECT * FROM moviestv';
         let conditions: string[] = [];
@@ -55,6 +56,10 @@ export const load: PageServerLoad = async ({ url }) => {
             conditions.push('steelbook = $' + (values.length + 1));
             values.push(steelbook === "true" ? true : steelbook === "false" ? false : steelbook);
         }
+        if (search) {
+            conditions.push('LOWER(title) LIKE $' + (values.length + 1));
+            values.push(`%${search.toLowerCase()}%`);
+        }
 
         if (conditions.length > 0) {
             query += ' WHERE ' + conditions.join(' AND ');
@@ -67,6 +72,11 @@ export const load: PageServerLoad = async ({ url }) => {
         }
         discs = discsResult.rows;
         discs.sort((a, b) => stripThe(a.title).localeCompare(stripThe(b.title)));
+
+        if (random && discs.length > 0) {
+            const randomIndex = Math.floor(Math.random() * discs.length);
+            discs = [discs[randomIndex]];
+        }
 
         return { 
             discs,
@@ -83,7 +93,7 @@ export const load: PageServerLoad = async ({ url }) => {
         return {
             discs: [],
             types: [],
-            res: [],
+            resolutions: [],
             franchises: [],
             watchedOptions: [],
             labels: [],

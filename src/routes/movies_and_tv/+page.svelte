@@ -8,45 +8,85 @@
     let selectedWatched = url?.searchParams.get('watched') ?? '';
     let selectedLabel = url?.searchParams.get('label') ?? '';
     let selectedSteel = url?.searchParams.get('steelbook') ?? '';
+    let search = url?.searchParams.get('search') ?? '';
+    let selectRandom = url?.searchParams.has('random');
 </script>
 
 <style>
+    :global(body) {
+        background-color: #222; /* dark gray */
+        color: #f0f0f0;         /* light text for contrast */
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
     .container {
         display: flex;
         flex-direction: column;
         align-items: center;
+        min-height: 100vh;
+        padding: 2rem 0;
     }
 
     table {
-        margin-bottom: 20px; /* Add some space between tables */
-        border-collapse: collapse; /* Collapse borders so they don't double up */
-        width: 100%; /* Set table width to 100% */
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #2c2c2c; /* slightly lighter dark for table */
+        color: #f0f0f0;
     }
 
     th, td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells */
-        text-align: left; /* Align text to the left within cells */
+        border: 1px solid #444;
+        padding: 8px;
+        text-align: left;
     }
 
     th {
-        background-color: #f2f2f2; /* Add background color to table header cells */
+        background-color: #333;
     }
 
     .follow_link {
-      color: rgb(218, 32, 193);
-      text-decoration: none;
-      border: none;
-      padding: 0;
+        color: #ff69b4; /* hot pink for accent */
+        text-decoration: none;
+        border: none;
+        padding: 0;
+    }
+
+    .follow_link:hover {
+        text-decoration: underline;
     }
 
     p {
-      text-align: left;
-      font-size: 1rem;
-      margin-top: 0; /* Adjusted margin-top */
-      height: auto; /* Fixed height */
-      display: block;
-      padding-bottom: 0;
+        text-align: left;
+        font-size: 1rem;
+        margin-top: 0;
+        height: auto;
+        display: block;
+        padding-bottom: 0;
+    }
+
+    input, select, button {
+        background: #333;
+        color: #f0f0f0;
+        border: 1px solid #555;
+        border-radius: 4px;
+        margin: 0 0.25rem 0.5rem 0;
+        padding: 0.5rem;
+    }
+
+    input[type="checkbox"] {
+        accent-color: #ff69b4;
+    }
+
+    button {
+        cursor: pointer;
+        background: #444;
+        transition: background 0.2s;
+    }
+
+    button:hover {
+        background: #555;
     }
 </style>
 
@@ -63,43 +103,45 @@
                 <option value={t}>{t}</option>
                 {/each}
             </select>
-            <label for="type">Resolution:</label>
-            <select name="type" id="type" bind:value={selectedRes}>
+            <label for="resolution">Resolution:</label>
+            <select name="resolution" id="resolution" bind:value={selectedRes}>
                 <option value="">All</option>
-                {#each data.res ?? [] as t}
+                {#each data.resolutions ?? [] as t}
                 <option value={t}>{t}</option>
                 {/each}
             </select>
-            <label for="type">Franchise:</label>
-            <select name="type" id="type" bind:value={selectedFranchise}>
+            <label for="franchise">Franchise:</label>
+            <select name="franchise" id="franchise" bind:value={selectedFranchise}>
                 <option value="">All</option>
                 {#each data.franchises ?? [] as t}
                 <option value={t}>{t}</option>
                 {/each}
             </select>
-            <label for="type">Watched:</label>
-            <select name="type" id="type" bind:value={selectedWatched}>
+            <label for="watched">Watched:</label>
+            <select name="watched" id="watched" bind:value={selectedWatched}>
                 <option value="">All</option>
                 {#each data.watchedOptions ?? [] as t}
                 <option value={t}>{t}</option>
                 {/each}
             </select>
-            <label for="type">Label:</label>
-            <select name="type" id="type" bind:value={selectedLabel}>
+            <label for="label">Label:</label>
+            <select name="label" id="label" bind:value={selectedLabel}>
                 <option value="">All</option>
                 {#each data.labels ?? [] as t}
                 <option value={t}>{t}</option>
                 {/each}
             </select>
-            <label for="type">Steelbook:</label>
-            <select name="type" id="type" bind:value={selectedSteel}>
+            <label for="steelbook">Steelbook:</label>
+            <select name="steelbook" id="steelbook" bind:value={selectedSteel}>
                 <option value="">All</option>
                 {#each data.steelbooks ?? [] as t}
                 <option value={t}>{t}</option>
                 {/each}
             </select>
         </div>
-        <button type="submit">Filter</button>
+        <input type="checkbox" name="random" bind:checked={selectRandom} />Pick Random
+        <input type="text" name="search" placeholder="Search by title..." bind:value={search} />
+        <button type="submit">Search</button>
         <button type="reset" onclick={() => { selectedType = ''; }}>Reset</button>
     </form>
 
