@@ -1,0 +1,174 @@
+@font-face {
+        font-family: 'Aurabesh';
+        src: url('/fonts/AurabeshFont.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+    html, body {
+        background-color: #23272f !important;
+        color: #f0f0f0;
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif; /* Default font */
+        min-height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem 0;
+        width: 100vw;
+    }
+
+    h1, h4 {
+        color: #e94560; /* dark red accent */
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+    }
+
+    .filters {
+        background: #262b36;
+        border-radius: 10px;
+        padding: 1rem 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 12px #0004;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .filters label {
+        font-weight: 600;
+        margin-right: 0.5rem;
+        color: #7da0fa; /* dark blue accent */
+    }
+
+    .filters select,
+    .filters input[type="text"] {
+        background: #23272f;
+        color: #f0f0f0;
+        border: 1.5px solid #7da0fa;
+        border-radius: 5px;
+        padding: 0.4rem 0.7rem;
+        margin-right: 1rem;
+        font-size: 1rem;
+        min-width: 120px;
+    }
+
+    .filters input[type="checkbox"] {
+        accent-color: #e94560;
+        margin-left: 1rem;
+        margin-right: 0.5rem;
+        transform: scale(1.2);
+    }
+
+    table {
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        width: 90vw;
+        max-width: 900px;
+        background-color: #23272f;
+        color: #f0f0f0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px #0004;
+    }
+
+    th, td {
+        border: 1px solid #2c3440;
+        padding: 12px 16px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #1a1d23;
+        color: #7da0fa;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #262b36;
+    }
+
+    tr:hover {
+        background-color: #2d3340;
+        transition: background 0.2s;
+    }
+
+    .follow_link {
+        color: #7da0fa;
+        text-decoration: none;
+        border: none;
+        padding: 0;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .follow_link:hover {
+        color: #e94560;
+        text-decoration: underline;
+    }
+
+    p {
+        text-align: left;
+        font-size: 1rem;
+        margin-top: 0;
+        height: auto;
+        display: block;
+        padding-bottom: 0;
+    }
+
+    input, select, button {
+        background: #333;
+        color: #f0f0f0;
+        border: 1px solid #555;
+        border-radius: 4px;
+        margin: 0 0.25rem 0.5rem 0;
+        padding: 0.5rem;
+    }
+
+    input[type="checkbox"] {
+        accent-color: #ff69b4;
+    }
+
+    button {
+        cursor: pointer;
+        background: #3e6bdf;
+        transition: color 0.2s;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 0.5rem 1.2rem;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #7da0fa;
+    }
+
+    .red-btn {
+        background: #ca1e3b;
+    }
+
+    .red-btn:hover {
+        background: #e94560
+    }
+
+    .aurabesh {
+        font-family: 'Aurabesh', 'Segoe UI', Arial, sans-serif;
+        transition: font-family 0.2s;
+        font-size: 2rem;           /* or whatever size you want */
+        line-height: 1.2;          /* consistent line height */
+        display: inline-block;     /* prevents inline shift */
+        min-width: 1em;            /* prevents width shrink */
+    }
+
+    .aurabesh:hover {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        /* font-size and line-height remain the same */
+    }

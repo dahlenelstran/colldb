@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "$lib/assets/css/global.css";
     import type { PageData } from './$types';
     export let data: PageData;
 
@@ -9,43 +10,8 @@
     }
 </script>
 
-<style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    table {
-        margin-bottom: 20px;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells */
-        text-align: left; /* Align text to the left within cells */
-    }
-
-    .follow_link {
-        color: rgb(218, 32, 193);
-        text-decoration: none;
-        border: none;
-        padding: 0;
-    }
-
-    p {
-        text-align: left;
-        font-size: 1rem;
-        margin-top: 0;
-        height: auto;
-        display: block;
-    }
-</style>
-
 <div class="container">
-    <h1>Movies and TV Shows Statistics</h1>
+    <h1 class="aurabesh">Movies and TV Shows Statistics</h1>
 
     <p><a class="follow_link" href="/movies_and_tv/">Back to List</a></p>
 
@@ -76,6 +42,13 @@
 
     <p> By Format:</p>
     <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Count</th>
+                <th>Percent</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Total VHS</td>
@@ -102,6 +75,13 @@
 
     <p> TV Shows by Format:</p>
     <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Count</th>
+                <th>Percent</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Total VHS TV Shows</td>
@@ -128,6 +108,13 @@
 
     <p> Movies by Format:</p>
     <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Count</th>
+                <th>Percent</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Total VHS Movies</td>
@@ -154,6 +141,13 @@
 
     <p>Steelbooks</p>
     <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Count</th>
+                <th>Percent</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Total Non-Steelbooks</td>
@@ -170,6 +164,13 @@
 
     <p>Watched vs Not Watched</p>
     <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Count</th>
+                <th>Percent</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Total Watched</td>

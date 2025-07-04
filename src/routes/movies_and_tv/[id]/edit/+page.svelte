@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "$lib/assets/css/global.css";
     import type { PageData } from "./$types";
     export let data: PageData;
 
@@ -11,47 +12,7 @@
     }
 </script>
 
-<style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    table {
-        margin-bottom: 20px; /* Add some space between tables */
-        border-collapse: collapse; /* Collapse borders so they don't double up */
-        width: 100%; /* Set table width to 100% */
-    }
-
-    th, td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells */
-        text-align: left; /* Align text to the left within cells */
-    }
-
-    th {
-        background-color: #f2f2f2; /* Add background color to table header cells */
-    }
-
-    .follow_link {
-      color: rgb(218, 32, 193);
-      text-decoration: none;
-      border: none;
-      padding: 0;
-    }
-
-    p {
-      text-align: left;
-      font-size: 1rem;
-      margin-top: 0; /* Adjusted margin-top */
-      height: auto; /* Fixed height */
-      display: block;
-      padding-bottom: 0;
-    }
-</style>
-
-<dev class="container">
+<div class="container" style="text-align: center;">
     <p><a class="follow_link" href="/movies_and_tv/{data.disc.id}">Back to {data.disc.title}</a></p>
 
     <form action="?/edit" method="post">
@@ -152,11 +113,11 @@
                 </tr>
             </tbody>
         </table>
-
         <button type="submit">Save</button>
     </form>
+    
 
     <form action="?/delete" method="post" on:submit|preventDefault={handleDelete}>
-    <button type="submit" style="background-color: red; color: white;">Delete</button>
-</form>
-</dev>
+        <button type="submit" class="red-btn">Delete</button>
+    </form>
+</div>

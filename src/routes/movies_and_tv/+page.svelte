@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "$lib/assets/css/global.css";
     import type { PageData } from './$types';
     export let data: PageData;
     export let url: URL;
@@ -12,87 +13,9 @@
     let selectRandom = url?.searchParams.has('random');
 </script>
 
-<style>
-    :global(body) {
-        background-color: #222; /* dark gray */
-        color: #f0f0f0;         /* light text for contrast */
-        margin: 0;
-        font-family: 'Segoe UI', Arial, sans-serif;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        padding: 2rem 0;
-    }
-
-    table {
-        margin-bottom: 20px;
-        border-collapse: collapse;
-        width: 100%;
-        background-color: #2c2c2c; /* slightly lighter dark for table */
-        color: #f0f0f0;
-    }
-
-    th, td {
-        border: 1px solid #444;
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #333;
-    }
-
-    .follow_link {
-        color: #ff69b4; /* hot pink for accent */
-        text-decoration: none;
-        border: none;
-        padding: 0;
-    }
-
-    .follow_link:hover {
-        text-decoration: underline;
-    }
-
-    p {
-        text-align: left;
-        font-size: 1rem;
-        margin-top: 0;
-        height: auto;
-        display: block;
-        padding-bottom: 0;
-    }
-
-    input, select, button {
-        background: #333;
-        color: #f0f0f0;
-        border: 1px solid #555;
-        border-radius: 4px;
-        margin: 0 0.25rem 0.5rem 0;
-        padding: 0.5rem;
-    }
-
-    input[type="checkbox"] {
-        accent-color: #ff69b4;
-    }
-
-    button {
-        cursor: pointer;
-        background: #444;
-        transition: background 0.2s;
-    }
-
-    button:hover {
-        background: #555;
-    }
-</style>
-
 <div class="container">
 
-    <h1>List of Movies and TV Shows</h1>
+    <h1 class="aurabesh">List of Movies and TV Shows</h1>
 
     <form method="get" class="filters">
         <div>
