@@ -2,6 +2,10 @@
     import "$lib/assets/css/global.css";
     import type { PageData } from './$types';
     export let data: PageData;
+    import Disc from '$lib/components/Disc.svelte';
+    
+    // Filters
+
     export let url: URL;
     let selectedType = url?.searchParams.get('type') ?? '';
     let selectedRes = url?.searchParams.get('resolution') ?? '';
@@ -70,7 +74,21 @@
 
     <h4> {data.discs.length} results found</h4>
 
-    <table>
+    <div class="list">
+        {#each data.discs as x}
+
+        <Disc
+            title={x.title}
+            resolution={x.resolution}
+            id={x.id}
+        />
+
+        {/each}
+    </div>
+    
+    
+
+    <!-- <table>
         <thead>
             <tr>
                 <th>Title</th>
@@ -85,7 +103,7 @@
                 </tr>
             {/each}
         </tbody>
-    </table>
+    </table> -->
 
     <p><a class="follow_link" href="/movies_and_tv/create">Add a Movie or TV Show</a></p>
 

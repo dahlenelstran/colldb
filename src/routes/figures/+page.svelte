@@ -4,6 +4,6 @@
 
 <div class="container">
 
-  <h1 class="aurabesh">Welcome to Dahlen's Collection</h1>
-  
+    <h1 class="aurabesh">List of Action Figures</h1>
+
 </div>

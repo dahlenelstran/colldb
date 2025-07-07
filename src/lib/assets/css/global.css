@@ -1,9 +1,11 @@
+@import url("https://www.nerdfonts.com/assets/css/webfont.css");
+
 @font-face {
-        font-family: 'Aurabesh';
-        src: url('/fonts/AurabeshFont.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-    }
+    font-family: 'Aurabesh';
+    src: url('/fonts/AurabeshFont.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
     
     html, body {
         background-color: #23272f !important;
@@ -22,97 +24,102 @@
         width: 100vw;
     }
 
-    h1, h4 {
-        color: #e94560; /* dark red accent */
-        letter-spacing: 1px;
-        margin-bottom: 1rem;
-    }
+/* Headings */
 
-    .filters {
-        background: #262b36;
-        border-radius: 10px;
-        padding: 1rem 2rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 12px #0004;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem 2rem;
-        align-items: center;
-        justify-content: center;
-    }
+h1, h4 {
+    color: #e94560; /* dark red accent */
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
 
-    .filters label {
-        font-weight: 600;
-        margin-right: 0.5rem;
-        color: #7da0fa; /* dark blue accent */
-    }
+/* Tables */
 
-    .filters select,
-    .filters input[type="text"] {
-        background: #23272f;
-        color: #f0f0f0;
-        border: 1.5px solid #7da0fa;
-        border-radius: 5px;
-        padding: 0.4rem 0.7rem;
-        margin-right: 1rem;
-        font-size: 1rem;
-        min-width: 120px;
-    }
+table {
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    width: 90vw;
+    max-width: 900px;
+    background-color: #23272f;
+    color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px #0004;
+}
 
-    .filters input[type="checkbox"] {
-        accent-color: #e94560;
-        margin-left: 1rem;
-        margin-right: 0.5rem;
-        transform: scale(1.2);
-    }
+th, td {
+    border: 1px solid #2c3440;
+    padding: 12px 16px;
+    text-align: left;
+}
 
-    table {
-        margin-bottom: 20px;
-        border-collapse: collapse;
-        width: 90vw;
-        max-width: 900px;
-        background-color: #23272f;
-        color: #f0f0f0;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 12px #0004;
-    }
+th {
+    background-color: #1a1d23;
+    color: #7da0fa;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
 
-    th, td {
-        border: 1px solid #2c3440;
-        padding: 12px 16px;
-        text-align: left;
-    }
+tr:nth-child(even) {
+    background-color: #262b36;
+}
 
-    th {
-        background-color: #1a1d23;
-        color: #7da0fa;
-        font-size: 1.1rem;
-        letter-spacing: 0.5px;
-    }
+tr:hover {
+    background-color: #2d3340;
+    transition: background 0.2s;
+}
 
-    tr:nth-child(even) {
-        background-color: #262b36;
-    }
+/* Link Interaction */
 
-    tr:hover {
-        background-color: #2d3340;
-        transition: background 0.2s;
-    }
+.follow_link {
+    color: #7da0fa;
+    text-decoration: none;
+    border: none;
+    padding: 0;
+    font-weight: 600;
+    transition: color 0.2s;
+}
 
-    .follow_link {
-        color: #7da0fa;
-        text-decoration: none;
-        border: none;
-        padding: 0;
-        font-weight: 600;
-        transition: color 0.2s;
-    }
+.follow_link:hover {
+    color: #e94560;
+}
 
-    .follow_link:hover {
-        color: #e94560;
-        text-decoration: underline;
-    }
+/* Filters */
+.filters {
+    background: #262b36;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px #0004;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+    color: #7da0fa;
+}
+
+.filters select, .filters input[type="text"] {
+    background: #23272f;
+    color: #f0f0f0;
+    border: 1.5px solid #7da0fa;
+    border-radius: 5px;
+    padding: 0.4rem 0.7rem;
+    margin-right: 1rem;
+    font-size: 1rem;
+    min-width: 120px;
+}
+
+.filters input[type="checkbox"] {
+    accent-color: #e94560;
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+    transform: scale(1.2);
+}
 
     p {
         text-align: left;
@@ -159,16 +166,166 @@
         background: #e94560
     }
 
-    .aurabesh {
-        font-family: 'Aurabesh', 'Segoe UI', Arial, sans-serif;
-        transition: font-family 0.2s;
-        font-size: 2rem;           /* or whatever size you want */
-        line-height: 1.2;          /* consistent line height */
-        display: inline-block;     /* prevents inline shift */
-        min-width: 1em;            /* prevents width shrink */
-    }
+/* Aurabesh */
 
-    .aurabesh:hover {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        /* font-size and line-height remain the same */
-    }
+.aurabesh {
+    font-family: 'Aurabesh', 'Segoe UI', Arial, sans-serif;
+    transition: font-family 0.2s;
+    font-size: 2rem;           /* or whatever size you want */
+    line-height: 1.2;          /* consistent line height */
+    display: inline-block;     /* prevents inline shift */
+    min-width: 1em;            /* prevents width shrink */
+}
+
+.aurabesh:hover {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    /* font-size and line-height remain the same */
+}
+
+/* Navigation Bar */
+
+.navbar {
+    width: 100vw;
+    background: #1a1d23;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px #0004;
+    margin-bottom: 2rem;
+}
+
+.navbar-logo {
+    height: 40px;
+    margin-right: 1rem;
+    flex: none; /* Logo keeps its size */
+}
+
+.navbar-links {
+    display: flex;
+    flex: 1; /* Take up remaining space */
+    gap: 0;  /* Remove gap between links, or set as desired */
+}
+
+.nav-link {
+    flex: 1; /* Each link takes equal width of navbar-links */
+    text-align: center;
+    color: #7da0fa;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover {
+    color: #e94560;
+}
+
+/* Footer */
+
+.footer {
+    width: 100vw;
+    background: #1a1d23;
+    color: #7da0fa;
+    display: flex;
+    justify-content: center;   /* horizontal centering */
+    align-items: center;       /* vertical centering */
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    font-size: 1rem;
+    box-shadow: 0 -2px 8px #0004;
+    min-height: 60px;          /* optional: set a minimum height */
+}
+
+.footer-png {
+    vertical-align: middle;
+    height: 1.5em;
+}
+
+.footer p img:first-child {
+    margin-right: 0.7em;  /* space after imperial logo */
+    margin-left: 0.7em;   /* add space before imperial logo */
+}
+
+.footer p img:last-child {
+    margin-left: 0.7em;   /* space before rebel logo */
+    margin-right: 0.7em;  /* add space after rebel logo if needed */
+}
+
+/* List Component */
+
+.list {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Icons */
+
+.yes-icon {
+    color: #ffffff;
+    font-size: 1.3em;
+}
+.no-icon {
+    color: #696565;
+    font-size: 1.3em;
+}
+
+/* Disc Component */
+
+.disc-link-wrapper {
+    width: 60vw;
+    max-width: 900px;
+    min-width: 260px;
+    display: block;
+    margin: 0 auto;
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+}
+
+.disc {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.2rem 1.5rem;
+    border: 1.5px solid #7da0fa;
+    border-radius: 12px;
+    background: #23272f;
+    box-shadow: 0 4px 16px #0003;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.disc:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 24px #0005;
+    border-color: #e94560;
+}
+
+.disc:hover .disc-title {
+    color: #e94560;
+}
+
+.disc-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px #0008;
+}
+
+.disc-resolution {
+    color: #b0b8d1;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
