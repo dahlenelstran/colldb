@@ -11,6 +11,12 @@
     let selectedOwned = url?.searchParams.get('owned') ?? '';
     let selectedCompleted = url?.searchParams.get('completed') ?? '';
     let search = url?.searchParams.get('search') ?? '';
+    let selectedSystem = url?.searchParams.get('system') ?? '';
+    let selectedFormat = url?.searchParams.get('format') ?? '';
+    let selectedBookType = url?.searchParams.get('bookType') ?? '';
+    let selectedRun = url?.searchParams.get('run') ?? '';
+    let selectedIssue = url?.searchParams.get('issue') ?? '';
+
 </script>
 
 <div class="container">
@@ -26,6 +32,45 @@
                 <option value={t}>{t}</option>
                 {/each}
             </select>
+            {#if selectedType === 'game'}
+                <label for="system">System:</label>
+                <select name="system" id="system" bind:value={selectedSystem}>
+                    <option value="">All</option>
+                    {#each data.systems ?? [] as t}
+                        <option value={t}>{t}</option>
+                    {/each}
+                </select>
+            {:else if selectedType === 'book'}
+                <label for="format">Format:</label>
+                <select name="format" id="format" bind:value={selectedFormat}>   
+                    <option value="">All</option>
+                    {#each data.formats ?? [] as t}
+                        <option value={t}>{t}</option>
+                    {/each}
+                </select>
+                <label for="bookType">Book Type:</label>
+                <select name="bookType" id="bookType" bind:value={selectedBookType}>
+                    <option value="">All</option>
+                    {#each data.bookTypes ?? [] as t}
+                        <option value={t}>{t}</option>
+                    {/each}
+                </select>
+            {:else if selectedType === 'comic'}
+                <label for="run">Run:</label>
+                <select name="run" id="run" bind:value={selectedRun}>
+                    <option value="">All</option>
+                    {#each data.runs ?? [] as t}
+                        <option value={t}>{t}</option>
+                    {/each}
+                </select>
+                <label for="issue">Issue:</label>
+                <select name="issue" id="issue" bind:value={selectedIssue}>
+                    <option value="">All</option>
+                    {#each data.issues ?? [] as t}
+                        <option value={t}>{t}</option>
+                    {/each}
+                </select>
+            {/if}
             <label for="canon">Canon:</label>
             <select name="canon" id="canon" bind:value={selectedCanon}>
                 <option value="">All</option>
