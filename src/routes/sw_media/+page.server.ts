@@ -30,6 +30,10 @@ export const load: PageServerLoad = async ({ url }) => {
         const runs = [...new Set(comicResult.rows.map(r => r.run).filter(Boolean))];
         const issues = [...new Set(comicResult.rows.map(r => r.issue).filter(Boolean))];
 
+        const seasonResult = await pool.query('SELECT DISTINCT show FROM swmedia_seasons');
+
+        const shows = [...new Set(seasonResult.rows.map(r => r.show).filter(Boolean))];
+
         // Pulling filtered results
 
         const type = url.searchParams.get('type');
@@ -42,8 +46,23 @@ export const load: PageServerLoad = async ({ url }) => {
         const bookType = url.searchParams.get('bookType');
         const run = url.searchParams.get('run');
         const issue = url.searchParams.get('issue');
+        const show = url.searchParams.get('show');
 
-        let query = 'SELECT * FROM swmedia';
+        let query = `
+            SELECT
+              swmedia.*,
+              ARRAY_REMOVE(ARRAY_AGG(DISTINCT swmedia_games.system), NULL) AS systems,
+              ARRAY_REMOVE(ARRAY_AGG(DISTINCT swmedia_books.format), NULL) AS formats,
+              MAX(swmedia_books.booktype) AS booktype,
+              MAX(swmedia_comics.run) AS run,
+              MAX(swmedia_comics.issue) AS issue,
+              MAX(swmedia_seasons.show) AS show
+            FROM swmedia
+            LEFT JOIN swmedia_games ON swmedia.id = swmedia_games.swmedia_id
+            LEFT JOIN swmedia_books ON swmedia.id = swmedia_books.swmedia_id
+            LEFT JOIN swmedia_comics ON swmedia.id = swmedia_comics.swmedia_id
+            LEFT JOIN swmedia_seasons ON swmedia.id = swmedia_seasons.swmedia_id
+        `;
         let conditions: string[] = [];
         let values: any[] = [];
 
@@ -99,6 +118,15 @@ export const load: PageServerLoad = async ({ url }) => {
             values.push(issue);
         }
 
+        let seasonConditions: string[] = [];
+
+        if (show) {
+            seasonConditions.push('show = $' + (values.length + 1));
+            values.push(show);
+        }
+
+        // Constructing the final query
+
         if (conditions.length > 0) {
             query += ' WHERE ' + conditions.join(' AND ');
         }
@@ -115,7 +143,11 @@ export const load: PageServerLoad = async ({ url }) => {
             query += ' AND EXISTS (SELECT 1 FROM swmedia_comics WHERE swmedia.id = swmedia_comics.swmedia_id AND ' + comicConditions.join(' AND ') + ')';
         }
 
-        query += ' ORDER BY release_date DESC';
+        if (seasonConditions.length > 0) {
+            query += ' AND EXISTS (SELECT 1 FROM swmedia_seasons WHERE swmedia.id = swmedia_seasons.swmedia_id AND ' + seasonConditions.join(' AND ') + ')';
+        }
+
+        query += ' GROUP BY swmedia.id ORDER BY release_date DESC';
 
         const mediaResult = await pool.query(query, values);
         media = mediaResult.rows;
@@ -138,7 +170,8 @@ export const load: PageServerLoad = async ({ url }) => {
             formats,
             bookTypes,
             runs,
-            issues
+            issues,
+            shows
         };
     }
     catch (error) {
@@ -154,6 +187,7 @@ export const load: PageServerLoad = async ({ url }) => {
             bookTypes: [],
             runs: [],
             issues: [],
+            shows: [],
             error: 'Failed to load Star Wars media.'
         };
     }

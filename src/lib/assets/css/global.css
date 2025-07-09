@@ -111,7 +111,7 @@ tr:hover {
     padding: 0.4rem 0.7rem;
     margin-right: 1rem;
     font-size: 1rem;
-    min-width: 120px;
+    min-width: 80px !important; /* Reduce from 100/120px */
 }
 
 .filters input[type="checkbox"] {
@@ -269,7 +269,7 @@ tr:hover {
 /* Icons */
 
 .yes-icon {
-    color: #ffffff;
+    color: #7da0fa;
     font-size: 1.3em;
 }
 .no-icon {
@@ -328,4 +328,229 @@ tr:hover {
     color: #b0b8d1;
     font-size: 1rem;
     margin-bottom: 0.2rem;
+}
+
+/* SWMedia Components */
+
+.swmedia-link-wrapper {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    min-width: 260px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.swmedia {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.2rem 1.5rem;
+    border: 1.5px solid #7da0fa;
+    border-radius: 12px;
+    background: #23272f;
+    box-shadow: 0 4px 16px #0003;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin: 0;
+    box-sizing: border-box;
+}
+.swmedia:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 24px #0005;
+    border-color: #e94560;
+}
+.swmedia:hover .swmedia-title {
+    color: #e94560;
+}
+.swmedia-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #fff;
+    text-shadow: 0 2px 8px #0008;
+    margin-bottom: 0.2rem;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.swmedia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
+}
+.swmedia-meta {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    gap: 2.5em;
+    margin-top: 0.7em;
+    font-size: 1.05em;
+    color: #b0b8d1;
+}
+.swmedia-type {
+    font-weight: normal;
+    font-style: italic;
+    color: #b0b8d1;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+.swmedia-badges {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    font-size: 1.2em;
+}
+.swmedia:hover .swmedia-meta,
+.swmedia:focus-within .swmedia-meta {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+}
+.swmedia-meta > div {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+}
+.swmedia-info {
+    font-weight: 600;
+    color: #7da0fa;
+}
+
+/* Filter Bar Component */
+
+.filterbar {
+    width: 100%;
+    max-width: 900px;
+    min-width: 260px;
+    margin: 2rem auto 1.5rem auto;
+    background: #1a1d23;
+    border: 1.5px solid #1a1d23;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px #0003;
+    padding: 0.7rem 1rem 1.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    position: relative;
+}
+
+.filterbar-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Ensures even spacing */
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+    flex-wrap: nowrap; /* Prevent wrapping to new lines */
+}
+
+.filterbar-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1 1 0;         /* Allow shrinking */
+    min-width: 0;        /* Allow to shrink below 120px if needed */
+    margin: 0 0.2em;
+    gap: 0.4em;
+}
+
+.filterbar-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    gap: 0.7rem;
+}
+
+.filterbar-search {
+    flex: 1 1 60%;
+}
+
+.filterbar-actions {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-end;
+}
+
+.filterbar-btn {
+    background: #7da0fa;
+    color: #23272f;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5em 1.2em;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.filterbar-btn:hover {
+    background: #e94560;
+    color: #fff;
+}
+.filterbar-reset {
+    background: #23272f;
+    color: #7da0fa;
+    border: 1px solid #7da0fa;
+}
+.filterbar-reset:hover {
+    background: #1a1d23;
+    color: #e94560;
+    border-color: #e94560;
+}
+.filterbar label {
+    font-weight: 600;
+    color: #7da0fa;
+    margin-right: 0.4em;
+    font-size: 1.05em;
+}
+
+.filterbar select,
+.filterbar input[type="text"],
+.filterbar .filterbar-input {
+    background: #23283a !important;
+    color: #e0e6f8 !important;
+    border: 1.5px solid #7da0fa;
+    border-radius: 12px;
+    padding: 0.35em 0.8em !important;
+    font-size: 1em !important;
+    margin-right: 0.5em !important;
+    min-width: 80px !important; /* Reduce from 100/120px */
+    transition: border 0.2s, box-shadow 0.2s !important;
+    outline: none !important;
+    box-shadow: 0 2px 8px #0002 !important;
+    appearance: none !important;
+}
+
+.filterbar select:focus,
+.filterbar input[type="text"]:focus,
+.filterbar .filterbar-input:focus {
+    border-color: #e94560 !important;
+    box-shadow: 0 0 0 2px #e9456044 !important;
+    background: #23283a !important;
+}
+
+.filterbar select:hover,
+.filterbar input[type="text"]:hover,
+.filterbar .filterbar-input:hover {
+    border-color: #a3bffa !important;
+}
+
+.filterbar option {
+    background: #23283a;
+    color: #e0e6f8;
+}
+
+.filterbar input[type="checkbox"] {
+    accent-color: #7da0fa;
+    margin-right: 0.5em;
 }

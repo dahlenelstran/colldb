@@ -1,7 +1,13 @@
 <script lang="ts">
     import "$lib/assets/css/global.css";
     import type { PageData } from './$types';
+    import { goto } from '$app/navigation';
     export let data: PageData;
+    import FilterBar from '$lib/components/FilterBar.svelte';
+    import SWGame from '$lib/components/SWGame.svelte';
+    import SWSeason from '$lib/components/SWSeason.svelte';
+    import SWComic from '$lib/components/SWComic.svelte';
+    import SWBook from '$lib/components/SWBook.svelte';
 
     // Filters
 
@@ -16,126 +22,200 @@
     let selectedBookType = url?.searchParams.get('bookType') ?? '';
     let selectedRun = url?.searchParams.get('run') ?? '';
     let selectedIssue = url?.searchParams.get('issue') ?? '';
+    let selectedShow = url?.searchParams.get('show') ?? '';
 
 </script>
 
 <div class="container">
 
-    <h1 class="aurabesh">List of Star Wars Media</h1>
+    <h1 class="aurabesh">Star Wars Media</h1>
 
-    <form method="get" class="filters">
-        <div>
-            <label for="type">Type:</label>
-            <select name="type" id="type" bind:value={selectedType}>
-                <option value="">All</option>
-                {#each data.types ?? [] as t}
-                <option value={t}>{t}</option>
-                {/each}
-            </select>
+    <FilterBar
+        onSubmit={() => {
+        const params = new URLSearchParams({
+            type: selectedType,
+            canon: selectedCanon,
+            owned: selectedOwned,
+            completed: selectedCompleted,
+            system: selectedSystem,
+            format: selectedFormat,
+            bookType: selectedBookType,
+            run: selectedRun,
+            issue: selectedIssue,
+            show: selectedShow,
+            search
+        });
+        goto(`?${params.toString()}`);
+    }}
+        onReset={() => {
+            selectedType = '';
+            selectedCanon = '';
+            selectedOwned = '';
+            selectedCompleted = '';
+            selectedSystem = '';
+            selectedFormat = '';
+            selectedBookType = '';
+            selectedRun = '';
+            selectedIssue = '';
+            selectedShow = '';
+            search = '';
+        }}
+    >
+        <span slot="dropdowns">
+            <div class="filterbar-group">
+                <label for="type">Type:</label>
+                <select id="type" bind:value={selectedType}>
+                    <option value="">All</option>
+                    {#each data.types ?? [] as t}
+                        <option value={t}>{t}</option>
+                    {/each}
+                </select>
+            </div>
+            <div class="filterbar-group">
+                <label for="canon">Canon:</label>
+                <select id="canon" bind:value={selectedCanon}>
+                    <option value="">All</option>
+                    {#each data.is_canons ?? [] as t}
+                        <option value={t === true ? "true" : t === false ? "false" : t}>
+                            {t === true ? "True" : t === false ? "False" : t}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+            <div class="filterbar-group">
+                <label for="owned">Owned:</label>
+                <select id="owned" bind:value={selectedOwned}>
+                    <option value="">All</option>
+                    {#each data.is_owneds ?? [] as t}
+                        <option value={t === true ? "true" : t === false ? "false" : t}>
+                            {t === true ? "True" : t === false ? "False" : t}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+            <div class="filterbar-group">
+                <label for="completed">Completed:</label>
+                <select id="completed" bind:value={selectedCompleted}>
+                    <option value="">All</option>
+                    {#each data.is_completeds ?? [] as t}
+                        <option value={t === true ? "true" : t === false ? "false" : t}>
+                            {t === true ? "True" : t === false ? "False" : t}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+
             {#if selectedType === 'game'}
-                <label for="system">System:</label>
-                <select name="system" id="system" bind:value={selectedSystem}>
-                    <option value="">All</option>
-                    {#each data.systems ?? [] as t}
-                        <option value={t}>{t}</option>
-                    {/each}
-                </select>
+                <div class="filterbar-group">
+                    <label for="system">System:</label>
+                    <select id="system" bind:value={selectedSystem}>
+                        <option value="">All</option>
+                        {#each data.systems ?? [] as t}
+                            <option value={t}>{t}</option>
+                        {/each}
+                    </select>
+                </div>
             {:else if selectedType === 'book'}
-                <label for="format">Format:</label>
-                <select name="format" id="format" bind:value={selectedFormat}>   
-                    <option value="">All</option>
-                    {#each data.formats ?? [] as t}
-                        <option value={t}>{t}</option>
-                    {/each}
-                </select>
-                <label for="bookType">Book Type:</label>
-                <select name="bookType" id="bookType" bind:value={selectedBookType}>
-                    <option value="">All</option>
-                    {#each data.bookTypes ?? [] as t}
-                        <option value={t}>{t}</option>
-                    {/each}
-                </select>
+                <div class="filterbar-group">
+                    <label for="format">Format:</label>
+                    <select id="format" bind:value={selectedFormat}>
+                        <option value="">All</option>
+                        {#each data.formats ?? [] as t}
+                            <option value={t}>{t}</option>
+                        {/each}
+                    </select>
+                </div>
+                <div class="filterbar-group">
+                    <label for="bookType">Book Type:</label>
+                    <select id="bookType" bind:value={selectedBookType}>
+                        <option value="">All</option>
+                        {#each data.bookTypes ?? [] as t}
+                            <option value={t}>{t}</option>
+                        {/each}
+                    </select>
+                </div>
+            {:else if selectedType === 'tvseason'}
+                <div class="filterbar-group">
+                    <label for="show">Show:</label>
+                    <select id="show" bind:value={selectedShow}>
+                        <option value="">All</option>
+                        {#each data.shows ?? [] as t}
+                            <option value={t}>{t}</option>
+                        {/each}
+                    </select>
+                </div>
             {:else if selectedType === 'comic'}
-                <label for="run">Run:</label>
-                <select name="run" id="run" bind:value={selectedRun}>
-                    <option value="">All</option>
-                    {#each data.runs ?? [] as t}
-                        <option value={t}>{t}</option>
-                    {/each}
-                </select>
-                <label for="issue">Issue:</label>
-                <select name="issue" id="issue" bind:value={selectedIssue}>
-                    <option value="">All</option>
-                    {#each data.issues ?? [] as t}
-                        <option value={t}>{t}</option>
-                    {/each}
-                </select>
+                <div class="filterbar-group">
+                    <label for="run">Run:</label>
+                    <select id="run" bind:value={selectedRun}>
+                        <option value="">All</option>
+                        {#each data.runs ?? [] as t}
+                            <option value={t}>{t}</option>
+                        {/each}
+                    </select>
+                </div>
+                <div class="filterbar-group">
+                    <label for="issue">Issue:</label>
+                    <select id="issue" bind:value={selectedIssue}>
+                        <option value="">All</option>
+                        {#each data.issues ?? [] as t}
+                            <option value={t}>{t}</option>
+                        {/each}
+                    </select>
+                </div>
             {/if}
-            <label for="canon">Canon:</label>
-            <select name="canon" id="canon" bind:value={selectedCanon}>
-                <option value="">All</option>
-                {#each data.is_canons ?? [] as t}
-                    <option value={t === true ? "true" : t === false ? "false" : t}>
-                        {t === true ? "True" : t === false ? "False" : t}
-                    </option>
-                {/each}
-            </select>
-
-            <label for="owned">Owned:</label>
-            <select name="owned" id="owned" bind:value={selectedOwned}>
-                <option value="">All</option>
-                {#each data.is_owneds ?? [] as t}
-                    <option value={t === true ? "true" : t === false ? "false" : t}>
-                        {t === true ? "True" : t === false ? "False" : t}
-                    </option>
-                {/each}
-            </select>
-
-            <label for="completed">Completed:</label>
-            <select name="completed" id="completed" bind:value={selectedCompleted}>
-                <option value="">All</option>
-                {#each data.is_completeds ?? [] as t}
-                    <option value={t === true ? "true" : t === false ? "false" : t}>
-                        {t === true ? "True" : t === false ? "False" : t}
-                    </option>
-                {/each}
-            </select>
-        </div>
-        <input type="text" name="search" placeholder="Search by title..." bind:value={search} />
-        <button type="submit">Search</button>
-        <button type="reset" onclick={() => { selectedType = ''; }}>Reset</button>
-    </form>
+        </span>
+        <span slot="search">
+            <input type="text" placeholder="Search by title..." bind:value={search} />
+        </span>
+    </FilterBar>
 
     <h4> {data.media.length} results found</h4>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Owned</th>
-                <th>Completed</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each data.media as x}
-                <tr>
-                    <td>{x.title}</td>
-                    <td>
-                        {#if x.is_owned}
-                            <i class="nf nf-md-check_circle_outline yes-icon"></i>
-                        {:else}
-                            <i class="nf nf-md-checkbox_blank_circle_outline no-icon"></i>
-                        {/if}
-                    </td>
-                    <td>
-                        {#if x.is_completed}
-                            <i class="nf nf-md-check_circle_outline yes-icon"></i>
-                        {:else}
-                            <i class="nf nf-md-checkbox_blank_circle_outline no-icon"></i>
-                        {/if}
-                    </td>
-                </tr>
-            {/each}
-        </tbody>
-    </table>
+    <div class="list">
+        {#each data.media as x}
+
+        {#if x.type === 'game'}
+            <SWGame
+                id={x.id}
+                title={x.title}
+                is_canon={x.is_canon}
+                is_owned={x.is_owned}
+                is_completed={x.is_completed}
+                systems={x.systems}
+            />
+        {:else if x.type === 'tvseason'}
+            <SWSeason
+                id={x.id}
+                title={x.title}
+                is_canon={x.is_canon}
+                is_owned={x.is_owned}
+                is_completed={x.is_completed}
+                show={x.show}
+            />
+        {:else if x.type === 'comic'}
+            <SWComic
+                id={x.id}
+                title={x.title}
+                run={x.run}
+                issue={x.issue}
+                is_canon={x.is_canon}
+                is_owned={x.is_owned}
+                is_completed={x.is_completed}
+            />
+        {:else if x.type === 'book'}
+            <SWBook
+                id={x.id}
+                title={x.title}
+                format={x.formats}
+                booktype={x.booktype}
+                is_canon={x.is_canon}
+                is_owned={x.is_owned}
+                is_completed={x.is_completed}
+            />
+        {/if}
+
+        {/each}
+    </div>
+
 </div>
