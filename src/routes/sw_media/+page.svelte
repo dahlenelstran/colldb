@@ -20,9 +20,21 @@
     let selectedSystem = url?.searchParams.get('system') ?? '';
     let selectedFormat = url?.searchParams.get('format') ?? '';
     let selectedBookType = url?.searchParams.get('bookType') ?? '';
-    let selectedRun = url?.searchParams.get('run') ?? '';
-    let selectedIssue = url?.searchParams.get('issue') ?? '';
     let selectedShow = url?.searchParams.get('show') ?? '';
+    let selectedTitle = '';
+    let selectedRunTitle = '';
+    let selectedRunYear = '';
+
+    $: {
+        if (selectedTitle) {
+            const [title, year] = selectedTitle.split('|||');
+            selectedRunTitle = title;
+            selectedRunYear = year;
+        } else {
+            selectedRunTitle = '';
+            selectedRunYear = '';
+        }
+    }
 
 </script>
 
@@ -40,9 +52,8 @@
             system: selectedSystem,
             format: selectedFormat,
             bookType: selectedBookType,
-            run: selectedRun,
-            issue: selectedIssue,
-            show: selectedShow,
+            runTitle: selectedRunTitle,
+            runYear: selectedRunYear,
             search
         });
         goto(`?${params.toString()}`);
@@ -55,10 +66,9 @@
             selectedSystem = '';
             selectedFormat = '';
             selectedBookType = '';
-            selectedRun = '';
-            selectedIssue = '';
-            selectedShow = '';
             search = '';
+            selectedRunTitle = '';
+            selectedRunYear = '';
         }}
     >
         <span slot="dropdowns">
@@ -146,20 +156,13 @@
                 </div>
             {:else if selectedType === 'comic'}
                 <div class="filterbar-group">
-                    <label for="run">Run:</label>
-                    <select id="run" bind:value={selectedRun}>
+                    <label for="title">Title:</label>
+                    <select id="title" bind:value={selectedTitle}>
                         <option value="">All</option>
-                        {#each data.runs ?? [] as t}
-                            <option value={t}>{t}</option>
-                        {/each}
-                    </select>
-                </div>
-                <div class="filterbar-group">
-                    <label for="issue">Issue:</label>
-                    <select id="issue" bind:value={selectedIssue}>
-                        <option value="">All</option>
-                        {#each data.issues ?? [] as t}
-                            <option value={t}>{t}</option>
+                        {#each data.comicRuns as run}
+                            <option value={`${run.title}|||${run.year}`}>
+                                {run.title} {run.year ? `(${run.year})` : ''}
+                            </option>
                         {/each}
                     </select>
                 </div>
@@ -197,7 +200,7 @@
             <SWComic
                 id={x.id}
                 title={x.title}
-                run={x.run}
+                run={`${x.run}${x.run_year ? ` (${x.run_year})` : ''}`}
                 issue={x.issue}
                 is_canon={x.is_canon}
                 is_owned={x.is_owned}

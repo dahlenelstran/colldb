@@ -25,10 +25,8 @@ export const load: PageServerLoad = async ({ url }) => {
         const formats = [...new Set(bookResult.rows.map(r => r.format).filter(Boolean))];
         const bookTypes = [...new Set(bookResult.rows.map(r => r.booktype).filter(Boolean))];
 
-        const comicResult = await pool.query('SELECT DISTINCT run, issue FROM swmedia_comics');
-
-        const runs = [...new Set(comicResult.rows.map(r => r.run).filter(Boolean))];
-        const issues = [...new Set(comicResult.rows.map(r => r.issue).filter(Boolean))];
+        const comicRunsResult = await pool.query('SELECT DISTINCT title, year FROM swmedia_comic_runs WHERE title IS NOT NULL');
+        const comicRuns = comicRunsResult.rows; // [{title: 'Darth Vader', year: 2015}, ...]
 
         const seasonResult = await pool.query('SELECT DISTINCT show FROM swmedia_seasons');
 
@@ -44,25 +42,30 @@ export const load: PageServerLoad = async ({ url }) => {
         const system = url.searchParams.get('system');
         const format = url.searchParams.get('format');
         const bookType = url.searchParams.get('bookType');
-        const run = url.searchParams.get('run');
-        const issue = url.searchParams.get('issue');
+        const title = url.searchParams.get('title');
         const show = url.searchParams.get('show');
+
+        const runTitle = url.searchParams.get('runTitle');
+        const runYear = url.searchParams.get('runYear');
 
         let query = `
             SELECT
-              swmedia.*,
-              ARRAY_REMOVE(ARRAY_AGG(DISTINCT swmedia_games.system), NULL) AS systems,
-              ARRAY_REMOVE(ARRAY_AGG(DISTINCT swmedia_books.format), NULL) AS formats,
-              MAX(swmedia_books.booktype) AS booktype,
-              MAX(swmedia_comics.run) AS run,
-              MAX(swmedia_comics.issue) AS issue,
-              MAX(swmedia_seasons.show) AS show
+            swmedia.*,
+            swmedia_comic_runs.title AS run,
+            swmedia_comic_runs.year AS run_year,
+            swmedia_comics.issue,
+            ARRAY_REMOVE(ARRAY_AGG(DISTINCT swmedia_games.system), NULL) AS systems,
+            ARRAY_REMOVE(ARRAY_AGG(DISTINCT swmedia_books.format), NULL) AS formats,
+            MAX(swmedia_books.booktype) AS booktype,
+            MAX(swmedia_seasons.show) AS show
             FROM swmedia
+            LEFT JOIN swmedia_comics ON swmedia.id = swmedia_comics.swmedia_id
+            LEFT JOIN swmedia_comic_runs ON swmedia_comics.run_id = swmedia_comic_runs.id
             LEFT JOIN swmedia_games ON swmedia.id = swmedia_games.swmedia_id
             LEFT JOIN swmedia_books ON swmedia.id = swmedia_books.swmedia_id
-            LEFT JOIN swmedia_comics ON swmedia.id = swmedia_comics.swmedia_id
             LEFT JOIN swmedia_seasons ON swmedia.id = swmedia_seasons.swmedia_id
         `;
+
         let conditions: string[] = [];
         let values: any[] = [];
 
@@ -109,13 +112,13 @@ export const load: PageServerLoad = async ({ url }) => {
 
         let comicConditions: string[] = [];
 
-        if (run) {
-            comicConditions.push('run = $' + (values.length + 1));
-            values.push(run);
+        if (runTitle) {
+            comicConditions.push('swmedia_comic_runs.title = $' + (values.length + 1));
+            values.push(runTitle);
         }
-        if (issue) {
-            comicConditions.push('issue = $' + (values.length + 1));
-            values.push(issue);
+        if (runYear) {
+            comicConditions.push('swmedia_comic_runs.year = $' + (values.length + 1));
+            values.push(runYear);
         }
 
         let seasonConditions: string[] = [];
@@ -140,23 +143,46 @@ export const load: PageServerLoad = async ({ url }) => {
         }
 
         if (comicConditions.length > 0) {
-            query += ' AND EXISTS (SELECT 1 FROM swmedia_comics WHERE swmedia.id = swmedia_comics.swmedia_id AND ' + comicConditions.join(' AND ') + ')';
+            query += ` AND EXISTS (
+                SELECT 1 FROM swmedia_comics sc
+                JOIN swmedia_comic_runs scr ON sc.run_id = scr.id
+                WHERE sc.swmedia_id = swmedia.id AND ${comicConditions.join(' AND ')}
+            )`;
         }
 
         if (seasonConditions.length > 0) {
             query += ' AND EXISTS (SELECT 1 FROM swmedia_seasons WHERE swmedia.id = swmedia_seasons.swmedia_id AND ' + seasonConditions.join(' AND ') + ')';
         }
 
-        query += ' GROUP BY swmedia.id ORDER BY release_date DESC';
+        query += `
+            GROUP BY
+            swmedia.id,
+            swmedia_comic_runs.title,
+            swmedia_comic_runs.year,
+            swmedia_comics.issue
+            ORDER BY release_date DESC
+        `;
 
         const mediaResult = await pool.query(query, values);
         media = mediaResult.rows;
 
 
+        const comicsResult = await pool.query(`
+            SELECT
+                swmedia_comics.swmedia_id,
+                swmedia_comic_runs.title AS run,
+                swmedia_comic_runs.year AS run_year,
+                swmedia_comics.issue
+            FROM swmedia_comics
+            JOIN swmedia_comic_runs ON swmedia_comics.run_id = swmedia_comic_runs.id
+        `);
+        const comics = comicsResult.rows;
+
         return { 
             // Filtered results
 
             media,
+            comics,
 
             // General filter options
 
@@ -169,8 +195,7 @@ export const load: PageServerLoad = async ({ url }) => {
             systems,
             formats,
             bookTypes,
-            runs,
-            issues,
+            comicRuns,
             shows
         };
     }
@@ -185,8 +210,7 @@ export const load: PageServerLoad = async ({ url }) => {
             systems: [],
             formats: [],
             bookTypes: [],
-            runs: [],
-            issues: [],
+            comicRuns: [],
             shows: [],
             error: 'Failed to load Star Wars media.'
         };

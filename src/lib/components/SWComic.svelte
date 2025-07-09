@@ -8,7 +8,7 @@
     export let issue: string = "Issue";
 </script>
 
-<a class="swmedia-link-wrapper" href={`/swmedia/${id}`}>
+<a class="swmedia-link-wrapper" href={`/sw_media/${id}`}>
     <div class="swmedia">
         <div class="swmedia-header">
             <span class="swmedia-title">
