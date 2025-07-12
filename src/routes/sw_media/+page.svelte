@@ -173,6 +173,11 @@
         </span>
     </FilterBar>
 
+    <p style="display: flex; justify-content: space-between;">
+        <span><a class="follow_link" href="/sw_media/runs">Comic Runs</a></span>
+        <span><a class="follow_link" href="/sw_media/shows">Shows</a></span>
+    </p>
+    
     <h4> {data.media.length} results found</h4>
 
     <div class="list">
