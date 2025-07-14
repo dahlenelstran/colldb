@@ -7,15 +7,15 @@
     export let show = "Show";
 </script>
 
-<a class="swmedia-link-wrapper" href={`/sw_media/${id}`}>
-    <div class="swmedia">
-        <div class="swmedia-header">
-            <span class="swmedia-title">
+<a class="comp-link-wrapper" href={`/sw_media/${id}`}>
+    <div class="comp">
+        <div class="comp-header">
+            <span class="comp-title">
                 <icon class="nf nf-md-television_box" title="Season"></icon>
                 {title}
-                <span class="swmedia-type"><em>TV Season</em></span>
+                <span class="comp-type"><em>TV Season</em></span>
             </span>
-            <span class="swmedia-badges">
+            <span class="comp-badges">
                 {#if is_canon}
                     <i class="nf nf-md-star yes-icon" title="Canon"></i>
                 {:else}
@@ -33,9 +33,9 @@
                 {/if}
             </span>
         </div>
-        <div class="swmedia-meta">
+        <div class="comp-meta">
             <div>
-                <span class="swmedia-info">Show:</span>
+                <span class="comp-info">Show:</span>
                 <span>{show}</span>
             </div>
         </div>

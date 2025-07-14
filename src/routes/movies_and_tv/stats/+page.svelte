@@ -8,12 +8,45 @@
         if (!total) return "0%";
         return ((count / total) * 100).toFixed(1) + "%";
     }
+
+    // For the charts :)
+    import { Chart } from 'chart.js/auto';
+    import { onMount } from 'svelte';
+    let chartCanvas: HTMLCanvasElement;
+
+    onMount(() => {
+        if (chartCanvas) {
+            new Chart(chartCanvas, {
+                type: 'pie',
+                data: {
+                    labels: ['Movies', 'TV Shows'],
+                    datasets: [{
+                        data: [
+                            data.results.Movie ?? 0,
+                            data.results["TV Show"] ?? 0
+                        ],
+                        backgroundColor: ['#42a5f5', '#ab47bc']
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+    });
 </script>
 
 <div class="container">
+    <div class="back">
+        <p><a class="follow_link" href="/movies_and_tv"><icon class="nf nf-fa-backward" title="Back"></icon> Back to Disc List</a></p>
+    </div>
+
     <h1 class="aurabesh">Movies and TV Shows Statistics</h1>
 
-    <p><a class="follow_link" href="/movies_and_tv/">Back to List</a></p>
+    <h2>Movies vs TV Shows</h2>
+    <canvas bind:this={chartCanvas} width="30" height="30"></canvas>
 
     <p>Total Movies and TV Shows: {('total' in data.results) ? data.results.total : 0}</p>
     

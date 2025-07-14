@@ -1,5 +1,4 @@
 import { pool } from "$lib/server/db";
-import { run } from "svelte/legacy";
 
 export async function load({ params }) { 
     const { id } = params;

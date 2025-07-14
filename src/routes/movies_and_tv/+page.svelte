@@ -81,8 +81,9 @@
             title={x.title}
             resolution={x.resolution}
             id={x.id}
+            watched={x.watched}
+            type={x.type}
         />
-
         {/each}
     </div>
     

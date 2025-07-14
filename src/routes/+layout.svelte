@@ -3,7 +3,7 @@
     <div class="navbar-links">
         <a href="/" class="nav-link">Home</a>
         <a href="/figures" class="nav-link">Figures</a>
-        <a href="/legos" class="nav-link">Legos</a>
+        <a href="/lego" class="nav-link">Lego</a>
         <a href="/sw_media" class="nav-link">SW Media</a>
         <a href="/movies_and_tv" class="nav-link">Movies & TV</a>
         <a href="/games" class="nav-link">Games</a>

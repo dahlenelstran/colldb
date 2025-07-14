@@ -6,30 +6,58 @@
     font-weight: normal;
     font-style: normal;
 }
-    
-    html, body {
-        background-color: #23272f !important;
-        color: #f0f0f0;
-        margin: 0;
-        font-family: 'Segoe UI', Arial, sans-serif; /* Default font */
-        min-height: 100vh;
-    }
 
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        padding: 2rem 0;
-        width: 100vw;
-    }
+/* Creating Variables */
+
+:root {
+    --red-accent: #e94560;
+    --blue-accent: #7da0fa;
+    --background-color: #23272f;
+    --dark-backdrop: #1a1d23;
+    --shadows: #0004;
+    --text-shadows: #0008;
+    --verylightgrey: #dddada;
+    --missing: #7da0fa30
+}
+
+/* General */
+
+html, body {
+    background-color: var(--background-color) !important;
+    color: var(--verylightgrey);
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif; /* Default font */
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 0;
+    width: 100vw;
+}
 
 /* Headings */
 
 h1, h4 {
-    color: #e94560; /* dark red accent */
+    color: var(--red-accent);
     letter-spacing: 1px;
     margin-bottom: 1rem;
+}
+
+/* Buttons on ID Pages */
+
+.back {
+    padding-left: 100px;
+    align-self: start;
+    margin-bottom: 20px;
+}
+.edit {
+    padding-right: 100px;
+    margin-left:auto;
+    margin-top: 20px;
 }
 
 /* Tables */
@@ -39,11 +67,11 @@ table {
     border-collapse: collapse;
     width: 90vw;
     max-width: 900px;
-    background-color: #23272f;
-    color: #f0f0f0;
+    background-color: var(--background-color);
+    color: var(--verylightgrey);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 12px #0004;
+    box-shadow: 0 2px 12px var(--shadows);
 }
 
 th, td {
@@ -53,8 +81,8 @@ th, td {
 }
 
 th {
-    background-color: #1a1d23;
-    color: #7da0fa;
+    background-color: var(--dark-backdrop);
+    color: var(--blue-accent);
     font-size: 1.1rem;
     letter-spacing: 0.5px;
 }
@@ -71,7 +99,7 @@ tr:hover {
 /* Link Interaction */
 
 .follow_link {
-    color: #7da0fa;
+    color: var(--blue-accent);
     text-decoration: none;
     border: none;
     padding: 0;
@@ -80,16 +108,16 @@ tr:hover {
 }
 
 .follow_link:hover {
-    color: #e94560;
+    color: var(--red-accent);
 }
 
 /* Filters */
 .filters {
-    background: #262b36;
+    background: var(--dark-backdrop);
     border-radius: 10px;
     padding: 1rem 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 12px #0004;
+    box-shadow: 0 2px 12px var(--shadows);
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 2rem;
@@ -100,13 +128,13 @@ tr:hover {
 .filters label {
     font-weight: 600;
     margin-right: 0.5rem;
-    color: #7da0fa;
+    color: var(--blue-accent);
 }
 
 .filters select, .filters input[type="text"] {
-    background: #23272f;
-    color: #f0f0f0;
-    border: 1.5px solid #7da0fa;
+    background: var(--background-color);
+    color: var(--verylightgrey);
+    border: 1.5px solid var(--blue-accent);
     border-radius: 5px;
     padding: 0.4rem 0.7rem;
     margin-right: 1rem;
@@ -115,7 +143,7 @@ tr:hover {
 }
 
 .filters input[type="checkbox"] {
-    accent-color: #e94560;
+    accent-color: var(--red-accent);
     margin-left: 1rem;
     margin-right: 0.5rem;
     transform: scale(1.2);
@@ -132,7 +160,7 @@ tr:hover {
 
     input, select, button {
         background: #333;
-        color: #f0f0f0;
+        color: var(--verylightgrey);
         border: 1px solid #555;
         border-radius: 4px;
         margin: 0 0.25rem 0.5rem 0;
@@ -145,7 +173,7 @@ tr:hover {
 
     button {
         cursor: pointer;
-        background: #3e6bdf;
+        background: var(--blue-accent);
         transition: color 0.2s;
         color: #fff;
         border: none;
@@ -155,15 +183,15 @@ tr:hover {
     }
 
     button:hover {
-        background: #7da0fa;
+        background: var(--blue-accent);
     }
 
     .red-btn {
-        background: #ca1e3b;
+        background: var(--red-accent);
     }
 
     .red-btn:hover {
-        background: #e94560
+        background: var(--red-accent)
     }
 
 /* Aurabesh */
@@ -186,11 +214,11 @@ tr:hover {
 
 .navbar {
     width: 100vw;
-    background: #1a1d23;
+    background: var(--dark-backdrop);
     display: flex;
     align-items: center;
     padding: 1rem 2rem;
-    box-shadow: 0 2px 8px #0004;
+    box-shadow: 0 2px 8px var(--shadows);
     margin-bottom: 2rem;
 }
 
@@ -209,7 +237,7 @@ tr:hover {
 .nav-link {
     flex: 1; /* Each link takes equal width of navbar-links */
     text-align: center;
-    color: #7da0fa;
+    color: var(--blue-accent);
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1rem;
@@ -218,15 +246,15 @@ tr:hover {
 }
 
 .nav-link:hover {
-    color: #e94560;
+    color: var(--red-accent);
 }
 
 /* Footer */
 
 .footer {
     width: 100vw;
-    background: #1a1d23;
-    color: #7da0fa;
+    background: var(--dark-backdrop);
+    color: var(--blue-accent);
     display: flex;
     justify-content: center;   /* horizontal centering */
     align-items: center;       /* vertical centering */
@@ -234,7 +262,7 @@ tr:hover {
     padding: 1rem 0;
     margin-top: 2rem;
     font-size: 1rem;
-    box-shadow: 0 -2px 8px #0004;
+    box-shadow: 0 -2px 8px var(--shadows);
     min-height: 60px;          /* optional: set a minimum height */
 }
 
@@ -253,6 +281,67 @@ tr:hover {
     margin-right: 0.7em;  /* add space after rebel logo if needed */
 }
 
+/* Info for [ID] Pages */
+
+.info {
+    box-sizing: border-box;
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    padding: 1.2rem;
+    text-overflow: ellipsis;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+    border: 1.5px solid var(--blue-accent);
+    text-shadow: 0 2px 8px var(--text-shadows);
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--shadows);
+    background: var(--background-color);
+    width: 800px;
+}
+.info:hover {
+    box-shadow: 0 8px 24px var(--shadows);
+}
+
+.linked-info {
+    color: var(--blue-accent);
+    text-decoration: none;
+    border: none;
+    padding: 0;
+    font-weight: 600;
+    transition: color 0.2s;
+
+    box-sizing: border-box;
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    padding: 1.2rem;
+    text-overflow: ellipsis;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+    border: 1.5px solid var(--blue-accent);
+    text-shadow: 0 2px 8px var(--text-shadows);
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--shadows);
+    background: var(--background-color);
+    width: 800px;
+}
+.linked-info:hover {
+    border-color: var(--red-accent);
+    box-shadow: 0 8px 24px var(--shadows);
+    color: var(--red-accent);
+}
+
 /* List Component */
 
 .list {
@@ -269,70 +358,17 @@ tr:hover {
 /* Icons */
 
 .yes-icon {
-    color: #7da0fa;
+    color: var(--blue-accent);
     font-size: 1.3em;
 }
 .no-icon {
-    color: #696565;
+    color: var(--missing);
     font-size: 1.3em;
-}
-
-/* Disc Component */
-
-.disc-link-wrapper {
-    width: 60vw;
-    max-width: 900px;
-    min-width: 260px;
-    display: block;
-    margin: 0 auto;
-    text-decoration: none;
-    color: inherit;
-    box-sizing: border-box;
-}
-
-.disc {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 1.2rem 1.5rem;
-    border: 1.5px solid #7da0fa;
-    border-radius: 12px;
-    background: #23272f;
-    box-shadow: 0 4px 16px #0003;
-    transition: transform 0.15s, box-shadow 0.15s;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.disc:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 8px 24px #0005;
-    border-color: #e94560;
-}
-
-.disc:hover .disc-title {
-    color: #e94560;
-}
-
-.disc-title {
-    font-weight: bold;
-    font-size: 1.25rem;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 8px #0008;
-}
-
-.disc-resolution {
-    color: #b0b8d1;
-    font-size: 1rem;
-    margin-bottom: 0.2rem;
 }
 
 /* SWMedia Components */
 
-.swmedia-link-wrapper {
+.comp-link-wrapper {
     text-decoration: none;
     color: inherit;
     display: block;
@@ -342,34 +378,34 @@ tr:hover {
     margin: 0 auto;
     box-sizing: border-box;
 }
-.swmedia {
+.comp {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     padding: 1.2rem 1.5rem;
-    border: 1.5px solid #7da0fa;
+    border: 1.5px solid var(--blue-accent);
     border-radius: 12px;
-    background: #23272f;
-    box-shadow: 0 4px 16px #0003;
+    background: var(--background-color);
+    box-shadow: 0 4px 16px var(--shadows);
     transition: transform 0.15s, box-shadow 0.15s;
     margin: 0;
     box-sizing: border-box;
 }
-.swmedia:hover {
+.comp:hover {
     transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 8px 24px #0005;
-    border-color: #e94560;
+    box-shadow: 0 8px 24px var(--shadows);
+    border-color: var(--red-accent);
 }
-.swmedia:hover .swmedia-title {
-    color: #e94560;
+.comp:hover .comp-title {
+    color: var(--red-accent);
 }
-.swmedia-title {
+.comp-title {
     font-weight: bold;
     font-size: 1.25rem;
-    color: #fff;
-    text-shadow: 0 2px 8px #0008;
+    color: var(--blue-accent);
+    text-shadow: 0 2px 8px var(--text-shadows);
     margin-bottom: 0.2rem;
     flex: 1;
     white-space: nowrap;
@@ -379,14 +415,14 @@ tr:hover {
     align-items: center;
     gap: 0.5em;
 }
-.swmedia-header {
+.comp-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     gap: 1em;
 }
-.swmedia-meta {
+.comp-meta {
     display: none;
     opacity: 0;
     transition: opacity 0.4s;
@@ -394,35 +430,35 @@ tr:hover {
     gap: 2.5em;
     margin-top: 0.7em;
     font-size: 1.05em;
-    color: #b0b8d1;
+    color: var(--verylightgrey);
 }
-.swmedia-type {
+.comp-type {
     font-weight: normal;
     font-style: italic;
-    color: #b0b8d1;
+    color: var(--verylightgrey);
     font-size: 1.1rem;
     white-space: nowrap;
 }
-.swmedia-badges {
+.comp-badges {
     display: flex;
     gap: 0.5em;
     align-items: center;
     font-size: 1.2em;
 }
-.swmedia:hover .swmedia-meta,
-.swmedia:focus-within .swmedia-meta {
+.comp:hover .comp-meta,
+.comp:focus-within .comp-meta {
     display: flex;
     opacity: 1;
     pointer-events: auto;
 }
-.swmedia-meta > div {
+.comp-meta > div {
     display: flex;
     gap: 0.3em;
     align-items: center;
 }
-.swmedia-info {
+.comp-info {
     font-weight: 600;
-    color: #7da0fa;
+    color: var(--blue-accent);
 }
 
 /* Filter Bar Component */
@@ -432,8 +468,8 @@ tr:hover {
     max-width: 900px;
     min-width: 260px;
     margin: 2rem auto 1.5rem auto;
-    background: #1a1d23;
-    border: 1.5px solid #1a1d23;
+    background: var(--dark-backdrop);
+    border: 1.5px solid var(--dark-backdrop);
     border-radius: 12px;
     box-shadow: 0 4px 16px #0003;
     padding: 0.7rem 1rem 1.2rem 1rem;
@@ -483,8 +519,8 @@ tr:hover {
 }
 
 .filterbar-btn {
-    background: #7da0fa;
-    color: #23272f;
+    background: var(--blue-accent);
+    color: var(--background-color);
     border: none;
     border-radius: 6px;
     padding: 0.5em 1.2em;
@@ -494,22 +530,22 @@ tr:hover {
     transition: background 0.2s;
 }
 .filterbar-btn:hover {
-    background: #e94560;
+    background: var(--red-accent);
     color: #fff;
 }
 .filterbar-reset {
-    background: #23272f;
-    color: #7da0fa;
-    border: 1px solid #7da0fa;
+    background: var(--background-color);
+    color: var(--blue-accent);
+    border: 1px solid var(--blue-accent);
 }
 .filterbar-reset:hover {
-    background: #1a1d23;
-    color: #e94560;
-    border-color: #e94560;
+    background: var(--dark-backdrop);
+    color: var(--red-accent);
+    border-color: var(--red-accent);
 }
 .filterbar label {
     font-weight: 600;
-    color: #7da0fa;
+    color: var(--blue-accent);
     margin-right: 0.4em;
     font-size: 1.05em;
 }
@@ -519,7 +555,7 @@ tr:hover {
 .filterbar .filterbar-input {
     background: #23283a !important;
     color: #e0e6f8 !important;
-    border: 1.5px solid #7da0fa;
+    border: 1.5px solid var(--blue-accent) !important;
     border-radius: 12px;
     padding: 0.35em 0.8em !important;
     font-size: 1em !important;
@@ -534,7 +570,7 @@ tr:hover {
 .filterbar select:focus,
 .filterbar input[type="text"]:focus,
 .filterbar .filterbar-input:focus {
-    border-color: #e94560 !important;
+    border-color: var(--red-accent) !important;
     box-shadow: 0 0 0 2px #e9456044 !important;
     background: #23283a !important;
 }
@@ -551,6 +587,6 @@ tr:hover {
 }
 
 .filterbar input[type="checkbox"] {
-    accent-color: #7da0fa;
+    accent-color: var(--blue-accent);
     margin-right: 0.5em;
 }

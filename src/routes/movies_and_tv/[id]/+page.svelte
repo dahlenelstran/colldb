@@ -4,47 +4,52 @@
     export let data: PageData;
 </script>
 
-<dev class="container">
-    <p><a class="follow_link" href="/movies_and_tv">Back to list</a></p>
+<div class="container">
+    <div class="back">
+        <p><a class="follow_link" href="/movies_and_tv"><icon class="nf nf-fa-backward" title="Back"></icon> Back to Disc List</a></p>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                {#if data.disc.type === "Movie"}
-                    <th><p><a class="follow_link" href="{data.disc.letterboxd}">{data.disc.title}</a></p></th>
-                {:else}
-                    <th>{data.disc.title}</th>
-                {/if}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Type</td>
-                <td>{data.disc.type}</td>
-            </tr>
-            <tr>
-                <td>Resolution</td>
-                <td>{data.disc.resolution}</td>
-            </tr>
-            <tr>
-                <td>Franchise</td>
-                <td>{data.disc.franchise || 'None'}</td>
-            </tr>
-            <tr>
-                <td>Watched</td>
-                <td>{data.disc.watched === false ? 'No' : data.disc.watched === true ? 'Yes' : 'Error'}</td>
-            </tr>
-            <tr>
-                <td>Label</td>
-                <td>{data.disc.label || 'None'}</td>
-            </tr>
-            <tr>
-                <td>Steelbook</td>
-                <td>{data.disc.steelbook === false ? 'No' : data.disc.steelbook === true ? 'Yes' : 'Error'}</td>
-            </tr>
-        </tbody>
-    </table>
+    {#if data.disc.type === "Movie"}
+        <h1><a class="follow_link" href="{data.disc.letterboxd}">{data.disc.title}</a></h1>
+    {:else}
+        <h1>{data.disc.title}</h1>
+    {/if}
 
-    <p><a class="follow_link" href="/movies_and_tv/{data.disc.id}/edit">Edit</a></p>
-</dev>
+    {#if data.disc.watched === true}
+        <div class="info">
+            Watched
+        </div>
+    {:else}
+        <div class="info">
+            Not Watched
+        </div>
+    {/if}
+    
+    <div class="info">
+        {data.disc.resolution}
+    </div>
+
+    {#if data.disc.franchise}
+        <a class="linked-info" href={`/movies_and_tv?type=&resolution=&franchise=${data.disc.franchise}&watched=&label=&steelbook=&search=`}>
+            <div>
+                <span class="nf nf-fa-franchise" title="Franchise"></span>{data.disc.franchise} Franchise
+            </div>
+        </a>
+    {/if}
+    
+    {#if data.disc.steelbook === true}
+        <div class="info">
+            <span class="nf nf-fa-steelbook" title="Steelbook"></span> Steelbook Edition
+        </div>
+    {/if}
+
+    {#if data.disc.label}
+        <div class="info">
+            {data.disc.label}
+        </div>
+    {/if}
+
+    <div class="edit">
+        <p><a class="follow_link" href="/movies_and_tv/{data.disc.id}/edit">Edit {data.disc.title} <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
+    </div>
+</div>
