@@ -39,6 +39,13 @@ html, body {
     width: 100vw;
 }
 
+/* Highlights */
+
+.highlight {
+    color: var(--red-accent);
+    font-weight: bold;
+}
+
 /* Headings */
 
 h1, h4 {
@@ -58,6 +65,24 @@ h1, h4 {
     padding-right: 100px;
     margin-left:auto;
     margin-top: 20px;
+}
+
+/* Stats */
+
+.stat-header {
+    color: var(--blue-accent);
+    background-color: var(--dark-backdrop);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    margin-bottom: .15rem;
+    text-align: center;
+}
+
+.stat-body {
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Tables */
@@ -286,12 +311,13 @@ tr:hover {
 .info {
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     gap: 0.5em;
-    justify-content: center;
+    text-align: center;
     margin: 0;
     margin-bottom: 1.5rem;
     overflow: hidden;
-    padding: 1.2rem;
+    padding: 1rem;
     text-overflow: ellipsis;
     transition: transform 0.15s, box-shadow 0.15s;
     white-space: nowrap;
@@ -301,7 +327,7 @@ tr:hover {
     font-weight: bold;
     border-radius: 12px;
     box-shadow: 0 4px 16px var(--shadows);
-    background: var(--background-color);
+    background: var(--dark-backdrop);
     width: 800px;
 }
 .info:hover {
@@ -333,7 +359,7 @@ tr:hover {
     font-weight: bold;
     border-radius: 12px;
     box-shadow: 0 4px 16px var(--shadows);
-    background: var(--background-color);
+    background: var(--dark-backdrop);
     width: 800px;
 }
 .linked-info:hover {

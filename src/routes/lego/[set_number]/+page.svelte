@@ -2,6 +2,9 @@
     import "$lib/assets/css/global.css";
     import type { PageData } from "../[set_number]/$types";
     export let data: PageData;
+
+    $: ppp = data.set.msrp / data.set.pieces;
+    $: ppm = data.set.msrp / data.set.minifigs;
 </script>
 
 <div class="container">
@@ -22,7 +25,19 @@
     </div>
     
     <div class="info">
-        {data.set.msrp}, Released in {data.set.year}
+        ${data.set.msrp}, Released in {data.set.year}
+    </div>
+
+    <div class="info">
+        Price per Piece: ${ppp.toFixed(2)}
+        <!-- Compare to Theme + Graph-->
+        <!-- Compare to All + Graph-->
+    </div>
+
+    <div class="info">
+        Price per Minifig: ${ppm.toFixed(2)}
+        <!-- Compare to Theme + Graph-->
+        <!-- Compare to All + Graph-->
     </div>
 
     <div class="edit">
