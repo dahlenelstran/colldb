@@ -17,7 +17,11 @@ export const load: PageServerLoad = async () => {
         `);
 
         // Each row is an object with all lego fields + theme_id, theme_title, theme_licensed
-        const sets = result.rows;
+        const sets = result.rows.flatMap(row => 
+            row.quantity > 1 
+            ? Array(row.quantity).fill(row) 
+            : [row]
+        );
 
         return {
             sets, 

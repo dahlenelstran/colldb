@@ -40,6 +40,12 @@
         <!-- Compare to All + Graph-->
     </div>
 
+    {#if data.set.quantity > 1}
+        <div class="info">
+            {data.set.quantity} Owned
+        </div>
+    {/if}
+
     <div class="edit">
         <p><a class="follow_link" href="/lego/{data.set.set_number}/edit">Edit {data.set.title} <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
     </div>

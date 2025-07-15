@@ -85,9 +85,9 @@
         return (yearlySets ? (yearlyMinifigs / yearlySets) : 0);
     }
 
-    // Generating graphs
+    // Per Theme Data
 
-        let msrpBarCanvas: HTMLCanvasElement;
+    // Generating graphs
 
     const msrpPerYear = data.years.map(y => {
         return data.sets
@@ -96,54 +96,59 @@
     });
 
     // Number of sets per year
-const setsPerYear = data.years.map(y =>
-    data.sets.filter(set => set.year === y).length
-);
+    const setsPerYear = data.years.map(y =>
+        data.sets.filter(set => set.year === y).length
+    );
 
-// Pieces per year
-const piecesPerYear = data.years.map(y =>
-    data.sets.filter(set => set.year === y).reduce((sum, set) => sum + (set.pieces ?? 0), 0)
-);
+    // Pieces per year
+    const piecesPerYear = data.years.map(y =>
+        data.sets.filter(set => set.year === y).reduce((sum, set) => sum + (set.pieces ?? 0), 0)
+    );
 
-// Minifigs per year
-const minifigsPerYear = data.years.map(y =>
-    data.sets.filter(set => set.year === y).reduce((sum, set) => sum + (set.minifigs ?? 0), 0)
-);
+    // Minifigs per year
+    const minifigsPerYear = data.years.map(y =>
+        data.sets.filter(set => set.year === y).reduce((sum, set) => sum + (set.minifigs ?? 0), 0)
+    );
 
-// Average PPP (Price Per Piece) per year
-const avgPPPPerYear = data.years.map((y, i) =>
-    piecesPerYear[i] ? msrpPerYear[i] / piecesPerYear[i] : 0
-);
+    // Average PPP (Price Per Piece) per year
+    const avgPPPPerYear = data.years.map((y, i) =>
+        piecesPerYear[i] ? msrpPerYear[i] / piecesPerYear[i] : 0
+    );
 
-// Average PPM (Price Per Minifig) per year
-const avgPPMPerYear = data.years.map((y, i) =>
-    minifigsPerYear[i] ? msrpPerYear[i] / minifigsPerYear[i] : 0
-);
+    // Average PPM (Price Per Minifig) per year
+    const avgPPMPerYear = data.years.map((y, i) =>
+        minifigsPerYear[i] ? msrpPerYear[i] / minifigsPerYear[i] : 0
+    );
 
-// Average Set Price per year
-const avgSetPricePerYear = data.years.map((y, i) =>
-    setsPerYear[i] ? msrpPerYear[i] / setsPerYear[i] : 0
-);
+    // Average Set Price per year
+    const avgSetPricePerYear = data.years.map((y, i) =>
+        setsPerYear[i] ? msrpPerYear[i] / setsPerYear[i] : 0
+    );
 
-// Average Set Pieces per year
-const avgSetPiecesPerYear = data.years.map((y, i) =>
-    setsPerYear[i] ? piecesPerYear[i] / setsPerYear[i] : 0
-);
+    // Average Set Pieces per year
+    const avgSetPiecesPerYear = data.years.map((y, i) =>
+        setsPerYear[i] ? piecesPerYear[i] / setsPerYear[i] : 0
+    );
 
-// Average Set Minifigs per year
-const avgSetMinifigsPerYear = data.years.map((y, i) =>
-    setsPerYear[i] ? minifigsPerYear[i] / setsPerYear[i] : 0
-);
+    // Average Set Minifigs per year
+    const avgSetMinifigsPerYear = data.years.map((y, i) =>
+        setsPerYear[i] ? minifigsPerYear[i] / setsPerYear[i] : 0
+    );
 
-// Canvas refs
-let setsBarCanvas: HTMLCanvasElement;
-let piecesBarCanvas: HTMLCanvasElement;
-let minifigsBarCanvas: HTMLCanvasElement;
-let avgPPPBarCanvas: HTMLCanvasElement;
-let avgPPMBarCanvas: HTMLCanvasElement;
-let avgSetPriceBarCanvas: HTMLCanvasElement;
-let avgSetPiecesBarCanvas: HTMLCanvasElement;
-let avgSetMinifigsBarCanvas: HTMLCanvasElement;
+    // Canvas refs
+    let msrpBarCanvas: HTMLCanvasElement;
+    let setsBarCanvas: HTMLCanvasElement;
+    let piecesBarCanvas: HTMLCanvasElement;
+    let minifigsBarCanvas: HTMLCanvasElement;
+    let avgPPPBarCanvas: HTMLCanvasElement;
+    let avgPPMBarCanvas: HTMLCanvasElement;
+    let avgSetPriceBarCanvas: HTMLCanvasElement;
+    let avgSetPiecesBarCanvas: HTMLCanvasElement;
+    let avgSetMinifigsBarCanvas: HTMLCanvasElement;
+
+    // Colors
+    const blueAccent = getComputedStyle(document.documentElement).getPropertyValue('--blue-accent').trim();
+    const redAccent = getComputedStyle(document.documentElement).getPropertyValue('--red-accent').trim();
 
     onMount(() => {
         if (msrpBarCanvas) {
@@ -152,20 +157,30 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                 data: {
                     labels: data.years,
                     datasets: [{
-                        label: "Total MSRP",
+                        label: "Total Spent",
+                        tooltip: {
+                            callbacks: {
+                                label: function(context: any) {
+                                    const value = context.parsed.y;
+                                    return `Total Spent: $${value.toFixed(2)}`;
+                                }
+                            }
+                        },
                         data: msrpPerYear,
-                        backgroundColor: "#42a5f5"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { beginAtZero: true, title: { display: true, text: "Total MSRP ($)" } },
+                        y: { beginAtZero: true, title: { display: true, text: "Total Spent ($)" } },
                         x: { title: { display: true, text: "Year" } }
                     }
                 }
             });
         }
+
         if (setsBarCanvas) {
             new Chart(setsBarCanvas, {
                 type: 'bar',
@@ -174,7 +189,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Number of Sets",
                         data: setsPerYear,
-                        backgroundColor: "#66bb6a"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -194,7 +210,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Total Pieces",
                         data: piecesPerYear,
-                        backgroundColor: "#ffa726"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -214,7 +231,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Total Minifigs",
                         data: minifigsPerYear,
-                        backgroundColor: "#ab47bc"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -234,7 +252,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Average PPP",
                         data: avgPPPPerYear,
-                        backgroundColor: "#26c6da"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -254,7 +273,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Average PPM",
                         data: avgPPMPerYear,
-                        backgroundColor: "#ef5350"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -274,7 +294,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Average Set Price",
                         data: avgSetPricePerYear,
-                        backgroundColor: "#8d6e63"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -294,7 +315,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Average Set Pieces",
                         data: avgSetPiecesPerYear,
-                        backgroundColor: "#789262"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -314,7 +336,8 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     datasets: [{
                         label: "Average Set Minifigs",
                         data: avgSetMinifigsPerYear,
-                        backgroundColor: "#ffd600"
+                        backgroundColor: blueAccent,
+                        hoverBackgroundColor: redAccent
                     }]
                 },
                 options: {
@@ -351,11 +374,11 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                 <span> Total Minifigs</span>
             </div>
             <div>
-                <span class="highlight">${totalMSRP}</span>
+                <span class="highlight">${totalMSRP.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span> Total MSRP</span>
             </div>
             <div>
-                <span class="highlight">${(totalMSRP*1.0975).toFixed(2)}</span>
+                <span class="highlight">${(totalMSRP*1.0975).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span> Total MSRP taxed</span>
             </div>
             <div>
@@ -367,7 +390,7 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                 <span> Average Price Per Minifig</span>
             </div>
             <div>
-                <span class="highlight">${averageYearly}</span>
+                <span class="highlight">${Number(averageYearly).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span> Average Yearly Spending</span>
             </div>
             <div>
@@ -406,7 +429,7 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     <span> Total Minifigs</span>
                 </div>
                 <div>
-                    <span class="highlight">${getYearlyMSRP(y).toFixed(2)}</span>
+                    <span class="highlight">${getYearlyMSRP(y).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     <span> Total Spent</span>
                 </div>
                 <div>
@@ -418,7 +441,7 @@ let avgSetMinifigsBarCanvas: HTMLCanvasElement;
                     <span> Average PPM</span>
                 </div>
                 <div>
-                    <span class="highlight">${getYearlyAvgSetPrice(y).toFixed(2)}</span>
+                    <span class="highlight">${getYearlyAvgSetPrice(y).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     <span> Average Set Price</span>
                 </div>
                 <div>
