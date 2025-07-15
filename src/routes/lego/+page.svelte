@@ -15,6 +15,8 @@
 
     <h1 class="aurabesh">List of Lego Sets</h1>
 
+    <p><a class="follow-link" href="/lego/stats">Statistics</a></p>
+
     <form method="get" class="filters">
         <input type="text" name="search" placeholder="Search by Set Title..." bind:value={search} />
 
@@ -58,6 +60,5 @@
         {/each}
     </div>
 
-    <p><a class="follow_link" href="/lego/create">Add a Lego Set</a></p>
-    <p><a class="follow_link" href="/lego/stats">Statistics</a></p>
+    <p><a class="follow-link" href="/lego/create">Add a Lego Set</a></p>
 </div>

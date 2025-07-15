@@ -87,6 +87,72 @@
 
     // Per Theme Data
 
+    function getThemeMSRP(themeId: number): number {
+        let sum = 0;
+        for (const set of data.sets) {
+            if (set.theme_id === themeId) {
+                sum += Number(set.msrp) || 0;
+            }
+        }
+        return sum;
+    }
+
+    function getThemeSets(themeId: number): number {
+        return data.sets.filter(set => set.theme_id === themeId).length;
+    }
+
+    function getThemePieces(themeId: number): number {
+        return data.sets.reduce((sum, set) => {
+            return set.theme_id === themeId ? sum + (set.pieces ?? 0) : sum;
+        }, 0);
+    }
+
+    function getThemeMinifigs(themeId: number): number {
+        return data.sets.reduce((sum, set) => {
+            return set.theme_id === themeId ? sum + (set.minifigs ?? 0) : sum;
+        }, 0);
+    }
+
+    function getThemePPP(themeId: number): number {
+        const themeMSRP = getThemeMSRP(themeId);
+        const themePieces = getThemePieces(themeId);
+        return (themePieces ? (themeMSRP / themePieces) : 0);
+    }
+
+    function getThemePPM(themeId: number): number {
+        const themeMSRP = getThemeMSRP(themeId);
+        const themeMinifigs = getThemeMinifigs(themeId);
+        return (themeMinifigs ? (themeMSRP / themeMinifigs) : 0);
+    }
+
+    function getThemeAvgSetPrice(themeId: number): number {
+        const themeSets = getThemeSets(themeId);
+        const themeMSRP = getThemeMSRP(themeId);
+        return (themeSets ? (themeMSRP / themeSets) : 0);
+    }
+
+    function getThemeAvgSetPieces(themeId: number): number {
+        const themeSets = getThemeSets(themeId);
+        const themePieces = getThemePieces(themeId);
+        return (themeSets ? (themePieces / themeSets) : 0);
+    }
+
+    function getThemeAvgSetMinifigs(themeId: number): number {
+        const themeSets = getThemeSets(themeId);
+        const themeMinifigs = getThemeMinifigs(themeId);
+        return (themeSets ? (themeMinifigs / themeSets) : 0);
+    }
+
+    // Per License Data
+
+    let licensedThemes = [];
+    let unlicensedThemes = [];
+
+    if (data?.themes) {
+        licensedThemes = data.themes.filter(theme => theme.licensed === true);
+        unlicensedThemes = data.themes.filter(theme => theme.licensed === false);
+    }
+
     // Generating graphs
 
     const msrpPerYear = data.years.map(y => {
@@ -366,11 +432,11 @@
                 <span> Total Sets</span>
             </div>
             <div>
-                <span class="highlight">{totalParts}</span>
+                <span class="highlight">{totalParts.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
                 <span> Total Parts</span>
             </div>
             <div>
-                <span class="highlight">{totalMinifigs}</span>
+                <span class="highlight">{totalMinifigs.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
                 <span> Total Minifigs</span>
             </div>
             <div>
@@ -408,11 +474,297 @@
         </div>
     </div>
 
+    <!-- Per License Info -->
+
+    <div class="info">
+        <div class="stat-header">
+            <span>{licensedThemes.length} Licensed Themes</span>
+        </div>
+        <div class="stat-body">
+            {#each licensedThemes as theme}
+                <div>
+                    <span class="highlight">{theme.title}</span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>{unlicensedThemes.length} Unlicensed Themes</span>
+        </div>
+        <div class="stat-body">
+            {#each unlicensedThemes as theme}
+                <div>
+                    <span class="highlight">{theme.title}</span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <!-- Per Theme Info -->
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Total Spending Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeMSRP(b.id) - getThemeMSRP(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">
+                            ${getThemeMSRP(theme.id).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
+                    {:else}
+                        <span class="highlight">
+                            ${getThemeMSRP(theme.id).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
+                    {/if}
+                    <span> spent on <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a></span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Total Sets Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeSets(b.id) - getThemeSets(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">{getThemeSets(theme.id)}</span>
+                    {:else}
+                        <span class="highlight">{getThemeSets(theme.id)}</span>
+                    {/if}
+                    {#if getThemeSets(theme.id) === 1}
+                        <span> <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> set</span>
+                    {:else}
+                        <span> <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> sets</span>
+                    {/if}
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Total Pieces Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemePieces(b.id) - getThemePieces(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">{getThemePieces(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
+                    {:else}
+                        <span class="highlight">{getThemePieces(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
+                    {/if}
+                    <span> <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> pieces</span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Total Minifigs Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeMinifigs(b.id) - getThemeMinifigs(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">{getThemeMinifigs(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
+                    {:else}
+                        <span class="highlight">{getThemeMinifigs(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
+                    {/if}
+                    {#if getThemeMinifigs(theme.id) === 1}
+                        <span> <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> minifigure</span>
+                    {:else}
+                        <span> <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> minifigures</span>
+                    {/if}
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Price Per Piece (PPP) Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemePPP(b.id) - getThemePPP(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">${getThemePPP(theme.id).toFixed(2)}</span>
+                    {:else if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemePPP(a.id) - getThemePPP(b.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="green-highlight">${getThemePPP(theme.id).toFixed(2)}</span>
+                    {:else}
+                        <span class="highlight">${getThemePPP(theme.id).toFixed(2)}</span>
+                    {/if}
+                    <span> per piece in <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> sets</span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Price Per Minifig (PPM) Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemePPM(b.id) - getThemePPM(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">${getThemePPM(theme.id).toFixed(2)}</span>
+                    {:else if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemePPM(a.id) - getThemePPM(b.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="green-highlight">${getThemePPM(theme.id).toFixed(2)}</span>
+                    {:else}
+                        <span class="highlight">${getThemePPM(theme.id).toFixed(2)}</span>
+                    {/if}
+                    <span> per minifigure in <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a> sets</span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Set Price Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeAvgSetPrice(b.id) - getThemeAvgSetPrice(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">${getThemeAvgSetPrice(theme.id).toFixed(2)}</span>
+                    {:else if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeAvgSetPrice(a.id) - getThemeAvgSetPrice(b.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="green-highlight">${getThemeAvgSetPrice(theme.id).toFixed(2)}</span>
+                    {:else}
+                        <span class="highlight">${getThemeAvgSetPrice(theme.id).toFixed(2)}</span>
+                    {/if}
+                    <span> per set for <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a></span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Set Pieces Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeAvgSetPieces(b.id) - getThemeAvgSetPieces(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">{getThemeAvgSetPieces(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
+                    {:else}
+                        <span class="highlight">{getThemeAvgSetPieces(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
+                    {/if}
+                    <span> pieces per set for <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a></span>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Set Minifigs Per Theme</span>
+        </div>
+        <div class="stat-body">
+            {#each data.themes as theme}
+                <div>
+                    {#if [0,1,2].includes(
+                        [...data.themes]
+                            .sort((a, b) => getThemeAvgSetMinifigs(b.id) - getThemeAvgSetMinifigs(a.id))
+                            .slice(0, 3)
+                            .map(t => t.id)
+                            .indexOf(theme.id)
+                    )}
+                        <span class="yellow-highlight">{getThemeAvgSetMinifigs(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
+                    {:else}
+                        <span class="highlight">{getThemeAvgSetMinifigs(theme.id).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
+                    {/if}
+                    {#if getThemeAvgSetMinifigs(theme.id) === 1}
+                        <span> minifig per set for <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a></span>
+                    {:else}
+                        <span> minifigs per set for <a class="follow-link" href={`/lego?search=&year=&theme=${theme.id}&license=`}>{theme.title}</a></span>
+                    {/if}
+                </div>
+            {/each}
+        </div>
+    </div>
+
     <!-- Per Year Info -->
 
     {#each data.years as y}
         <div class="info">
-            <div class="stat-header">
+            <div class="stat-header"> 
                 <span>Statistics for {y}</span>
             </div>
             <div class="stat-body">
@@ -446,40 +798,96 @@
                 </div>
                 <div>
                     <span class="highlight">{getYearlyAvgSetPieces(y).toFixed(2)}</span>
-                    <span> Average Set Pieces</span>
+                    <span> pieces in the average set</span>
                 </div>
                 <div>
                     <span class="highlight">{getYearlyAvgSetMinifigs(y).toFixed(2)}</span>
-                    <span> Average Set Minifigs</span>
+                    <span> minifigures in the average set</span>
                 </div>
             </div>
         </div>
     {/each}
 
-    <h2>Total MSRP by Year</h2>
-    <canvas bind:this={msrpBarCanvas} width="600" height="300"></canvas>
+    <!-- Generating Bar Charts -->
 
-    <h2>Number of Sets by Year</h2>
-    <canvas bind:this={setsBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Total MSRP by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={msrpBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Total Pieces by Year</h2>
-    <canvas bind:this={piecesBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Number of Sets by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={setsBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Total Minifigs by Year</h2>
-    <canvas bind:this={minifigsBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Total Pieces by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={piecesBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Average Price Per Piece (PPP) by Year</h2>
-    <canvas bind:this={avgPPPBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Total Minifigs by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={minifigsBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Average Price Per Minifig (PPM) by Year</h2>
-    <canvas bind:this={avgPPMBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Price Per Piece (PPP) by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={avgPPPBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Average Set Price by Year</h2>
-    <canvas bind:this={avgSetPriceBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Price Per Minifig (PPM) by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={avgPPMBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Average Set Pieces by Year</h2>
-    <canvas bind:this={avgSetPiecesBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Set Price by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={avgSetPriceBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 
-    <h2>Average Set Minifigs by Year</h2>
-    <canvas bind:this={avgSetMinifigsBarCanvas} width="600" height="300"></canvas>
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Set Pieces by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={avgSetPiecesBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="stat-header">
+            <span>Average Set Minifigs by Year</span>
+        </div>
+        <div class="stat-body">
+            <canvas bind:this={avgSetMinifigsBarCanvas} width="600" height="300"></canvas>
+        </div>
+    </div>
 </div>

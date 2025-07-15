@@ -6,6 +6,9 @@ export const load: PageServerLoad = async () => {
         const yearsResult = await pool.query(`SELECT DISTINCT year FROM lego WHERE year IS NOT NULL ORDER BY year ASC`);
         const years = yearsResult.rows.map(r => r.year);
 
+        const themeResult = await pool.query(`SELECT id, title, licensed FROM lego_themes ORDER BY title ASC`);
+        const themes = themeResult.rows;
+
         const result = await pool.query(`
             SELECT 
                 lego.*, 
@@ -25,13 +28,15 @@ export const load: PageServerLoad = async () => {
 
         return {
             sets, 
-            years 
+            years,
+            themes
         };
     } catch (error) {
         console.error("Error fetching LEGO stats", error);
         return {
             sets: [], 
-            years: [] 
+            years: [],
+            themes: []
         };
     }
 };

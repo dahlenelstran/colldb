@@ -17,7 +17,9 @@
     --shadows: #0004;
     --text-shadows: #0008;
     --verylightgrey: #dddada;
-    --missing: #7da0fa30
+    --missing: #7da0fa30;
+    --yellow-accent: #f0c36d;
+    --green-accent: #4a914d;
 }
 
 /* General */
@@ -43,6 +45,16 @@ html, body {
 
 .highlight {
     color: var(--red-accent);
+    font-weight: bold;
+}
+
+.yellow-highlight {
+    color: var(--yellow-accent);
+    font-weight: bold;
+}
+
+.green-highlight {
+    color: var(--green-accent);
     font-weight: bold;
 }
 
@@ -123,7 +135,7 @@ tr:hover {
 
 /* Link Interaction */
 
-.follow_link {
+.follow-link {
     color: var(--blue-accent);
     text-decoration: none;
     border: none;
@@ -132,7 +144,7 @@ tr:hover {
     transition: color 0.2s;
 }
 
-.follow_link:hover {
+.follow-link:hover {
     color: var(--red-accent);
 }
 
