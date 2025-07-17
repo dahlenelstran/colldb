@@ -1,4 +1,3 @@
-import type { PageServerLoad } from './$types';
 import { pool } from "$lib/server/db";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from './$types';

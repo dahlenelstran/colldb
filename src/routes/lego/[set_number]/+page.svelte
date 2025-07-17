@@ -9,12 +9,12 @@
 
 <div class="container">
     <div class="back">
-        <p><a class="follow-link" href="/lego"><icon class="nf nf-fa-backward" title="Back"></icon> Back to Lego List</a></p>
+        <p><a class="follow-link" href="/lego/theme/{data.set.theme_id}"><icon class="nf nf-fa-backward" title="Back"></icon> Back to {data.set.theme_title}</a></p>
     </div>
 
     <h1>{data.set.set_number} / {data.set.title}</h1>
 
-    <a class="linked-info" href={`/lego?search=&year=&theme=${data.set.theme_id}&license=`}>
+    <a class="linked-info" href={`/lego/theme_${data.set.theme_id}`}>
         <div>
             {data.set.theme_title}
         </div>

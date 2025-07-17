@@ -15,7 +15,8 @@
 
     <h1 class="aurabesh">List of Lego Sets</h1>
 
-    <p><a class="follow-link" href="/lego/stats">Statistics</a></p>
+    <p><a class="follow-link" href="/lego/stats">Statistics <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
+    <p><a class="follow-link" href="/lego/theme">Themes <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
 
     <form method="get" class="filters">
         <input type="text" name="search" placeholder="Search by Set Title..." bind:value={search} />
@@ -55,7 +56,6 @@
             year = {x.year}
             minifigs = {x.minifigs}
             pieces = {x.pieces}
-            msrp = {x.msrp}
         />
         {/each}
     </div>

@@ -1,11 +1,10 @@
 <script lang="ts">
     export let set_number= "Id";
     export let title = "Title";
-    export let theme = "Theme";
     export let year = "Year";
     export let minifigs = "Minifigs";
     export let pieces = "Pieces";
-    export let msrp = "MSRP";
+    export let theme: string | undefined = undefined; // Optional theme property
 </script>
 
 <a class="comp-link-wrapper" href={`/lego/${set_number}`}>
@@ -15,9 +14,11 @@
                 {set_number} / {title}
                 <span class="comp-type"><em>{year}</em></span>
             </span>
-            <span class="comp-badges">
-                {theme}
-            </span>
+            {#if theme}
+                <span class="comp-badges">
+                    {theme}
+                </span>
+            {/if}
         </div>
         <div class="comp-meta">
             <div>

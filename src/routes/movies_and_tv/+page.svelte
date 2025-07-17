@@ -86,27 +86,8 @@
         />
         {/each}
     </div>
-    
-    
 
-    <!-- <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Resolution</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each data.discs as x}
-                <tr>
-                    <td><p><a class="follow_link" href="/movies_and_tv/{x.id}">{x.title}</a></p></td>
-                    <td>{x.resolution}</td>
-                </tr>
-            {/each}
-        </tbody>
-    </table> -->
+    <p><a class="follow-link" href="/movies_and_tv/create">Add a Movie or TV Show</a></p>
 
-    <p><a class="follow_link" href="/movies_and_tv/create">Add a Movie or TV Show</a></p>
-
-    <p><a class="follow_link" href="/movies_and_tv/stats">Statistics</a></p>
+    <p><a class="follow-link" href="/movies_and_tv/stats">Statistics</a></p>
 </div>
