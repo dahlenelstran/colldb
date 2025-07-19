@@ -83,6 +83,8 @@
             id={x.id}
             watched={x.watched}
             type={x.type}
+            label={x.label}
+            steelbook={x.steelbook}
         />
         {/each}
     </div>

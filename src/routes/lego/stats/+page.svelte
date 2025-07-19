@@ -478,6 +478,9 @@
 </script>
 
 <div class="container">
+    <div class="back">
+        <p><a class="follow-link" href="/lego"><icon class="nf nf-fa-backward" title="Back"></icon> Back to All Sets</a></p>
+    </div>
 
     <h1 class="aurabesh">LEGO Statistics</h1>
 

@@ -9,7 +9,7 @@
 
     <h1 class="aurabesh">List of Star Wars Comic Runs</h1>
 
-    <p><a class="follow_link" href="/sw_media">Back to all Star Wars Media</a></p>
+    <p><a class="follow-link" href="/sw_media">Back to all Star Wars Media</a></p>
 
     <h4> {data.runs.length} Runs Total</h4>
 

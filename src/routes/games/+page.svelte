@@ -59,6 +59,6 @@
         {/each}
     </div>
 
-    <p><a class="follow_link" href="/games/create">Add a Game</a></p>
-    <p><a class="follow_link" href="/games/stats">Statistics</a></p>
+    <p><a class="follow-link" href="/games/create">Add a Game</a></p>
+    <p><a class="follow-link" href="/games/stats">Statistics</a></p>
 </div>

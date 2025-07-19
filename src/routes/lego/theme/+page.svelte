@@ -17,6 +17,10 @@
 </script>
 
 <div class="list">
+    <div class="back">
+        <p><a class="follow-link" href="/lego"><icon class="nf nf-fa-backward" title="Back"></icon> Back to All Themes</a></p>
+    </div>
+
     <h1>Lego Themes</h1>
 
     <h4>{data.themes.length} themes total</h4>

@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="back">
-        <p><a class="follow_link" href="/games"><icon class="nf nf-fa-backward" title="Back"></icon> Back to Games List</a></p>
+        <p><a class="follow-link" href="/games"><icon class="nf nf-fa-backward" title="Back"></icon> Back to All Games</a></p>
     </div>
 
     <h1>{data.game.title}</h1>
@@ -36,6 +36,6 @@
     {/if}
 
     <div class="edit">
-        <p><a class="follow_link" href="/games/{data.game.id}/edit">Edit <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
+        <p><a class="follow-link" href="/games/{data.game.id}/edit">Edit <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
     </div>
 </div>

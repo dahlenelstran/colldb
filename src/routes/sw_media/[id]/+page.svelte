@@ -5,7 +5,7 @@
 </script>
 
 <dev class="container">
-    <p><a class="follow_link" href="/sw_media">Back to all Star Wars Media</a></p>
+    <p><a class="follow-link" href="/sw_media">Back to all Star Wars Media</a></p>
 
     <h1>{data.media.title}</h1>
     <p>Type: {data.media.type}</p>
@@ -112,5 +112,5 @@
         </table>
     {/if}
 
-    <p><a class="follow_link" href="/swmedia/{data.media.id}/edit">Edit</a></p>
+    <p><a class="follow-link" href="/swmedia/{data.media.id}/edit">Edit</a></p>
 </dev>

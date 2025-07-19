@@ -12,8 +12,8 @@
 </script>
 
 <div class="container">
-    <p><a class="follow_link" href="/sw_media">Back to all Star Wars Media</a></p>
-    <p><a class="follow_link" href={`/sw_media/runs/`}>Back to Star Wars Comic Runs</a></p>
+    <p><a class="follow-link" href="/sw_media">Back to all Star Wars Media</a></p>
+    <p><a class="follow-link" href={`/sw_media/runs/`}>Back to Star Wars Comic Runs</a></p>
 
     <h1>{data.run.title} {#if data.run.year}({data.run.year}){/if}</h1>
 

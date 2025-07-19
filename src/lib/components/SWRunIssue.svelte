@@ -11,13 +11,13 @@
         : "";
 </script>
 
-<a class="swmedia-link-wrapper" href={`/sw_media/${id}`}>
-    <div class="swmedia">
-        <div class="swmedia-header">
-            <span class="swmedia-title">
+<a class="comp-link-wrapper" href={`/sw_media/${id}`}>
+    <div class="comp">
+        <div class="comp-header">
+            <span class="comp-title">
                 {title}
             </span>
-            <span class="swmedia-badges">
+            <span class="comp-badges">
                 {#if is_completed}
                     <i class="nf nf-md-checkbox_marked_circle_outline yes-icon" title="Completed"></i>
                 {:else}
@@ -30,9 +30,9 @@
                 {/if}
             </span>
         </div>
-        <div class="swmedia-meta">
+        <div class="comp-meta">
             <div>
-                <span class="swmedia-info">Release Date:</span>
+                <span class="comp-info">Release Date:</span>
                 <span>
                     {#if release_date && formatDate(release_date)}
                         {formatDate(release_date)}
