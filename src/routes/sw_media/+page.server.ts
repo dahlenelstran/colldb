@@ -44,7 +44,7 @@ export const load: PageServerLoad = async ({ url }) => {
         const bookType = url.searchParams.get('bookType');
         const title = url.searchParams.get('title');
         const show = url.searchParams.get('show');
-        const sort = url.searchParams.get('sort') === 'asc' ? true : url.searchParams.get('sort') === 'desc' ? false : null;
+        const sort = url.searchParams.get('sort') === 'true' ? true : url.searchParams.get('sort') === 'false' ? false : null;
 
         const runTitle = url.searchParams.get('runTitle');
         const runYear = url.searchParams.get('runYear');
@@ -164,11 +164,11 @@ export const load: PageServerLoad = async ({ url }) => {
         `;
 
         if (sort == true) {
-            query += ` ORDER BY release_date ASC `;
+            query += `ORDER BY swmedia.release_date ASC `;
         }
 
         if (sort == false) {
-            query += ` ORDER BY release_date DESC `;
+            query += `ORDER BY swmedia.release_date DESC `;
         }
 
         const mediaResult = await pool.query(query, values);

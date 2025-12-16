@@ -1,6 +1,7 @@
 import { pool } from "$lib/server/db";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from './$types';
+import { run } from "svelte/legacy";
 
 export const actions: Actions = {
     async log(event) {
@@ -35,6 +36,9 @@ export async function load({ params }) {
         const bookResult = await pool.query('SELECT * FROM swmedia_books WHERE swmedia_id = $1', [id]);
         const seasonResult = await pool.query('SELECT * FROM swmedia_seasons WHERE swmedia_id = $1', [id]);
         const comicResult = await pool.query('SELECT * FROM swmedia_comics WHERE swmedia_id = $1', [id]);
+        const comicInfo = comicResult.rows[0];
+        const runResult = await pool.query('SELECT * FROM swmedia_comic_runs INNER JOIN swmedia_comics on swmedia_comic_runs.id = swmedia_comics.run_id WHERE swmedia_comics.swmedia_id = $1', [id]);
+        const runInfo = runResult.rows[0];
 
         return {
             media: {
@@ -44,12 +48,18 @@ export async function load({ params }) {
                 is_canon: info.is_canon,
                 is_owned: info.is_owned,
                 is_completed: info.is_completed,
-                id: info.id
+                id: info.id,
             },
             games: gameResult.rows,
             books: bookResult.rows,
             seasons: seasonResult.rows,
-            comics: comicResult.rows
+            comics: {
+                issue: comicInfo.issue,
+                run: runInfo.title,
+                run_id: runInfo.id
+            }
+            // comics: comicResult.rows,
+            // runs: runResult.rows
         }
     }
     catch (error) {

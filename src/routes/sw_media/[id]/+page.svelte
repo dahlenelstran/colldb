@@ -9,12 +9,6 @@
 
     <h1>{data.media.title}</h1>
     <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>{data.media.title}</th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
                 <td>Release Date</td>
@@ -116,7 +110,7 @@
         </table>
     {/if}
 
-    {#if data.comics && data.comics.length}
+    {#if data.comics}
         <h2>Comic Details</h2>
         <table>
             <thead>
@@ -126,12 +120,10 @@
                 </tr>
             </thead>
             <tbody>
-                {#each data.comics as comic}
-                    <tr>
-                        <td>{comic.run}</td>
-                        <td>{comic.issue}</td>
-                    </tr>
-                {/each}
+                <tr>
+                    <td><a class="follow-link" href="/sw_media/runs/{data.comics.run_id}">{data.comics.run}</a></td>
+                    <td>{data.comics.issue}</td>
+                </tr>
             </tbody>
         </table>
     {/if}

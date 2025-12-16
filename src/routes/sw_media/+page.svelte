@@ -27,7 +27,6 @@
     let selectedRunTitle = '';
     let selectedRunYear = '';
     let selectedSort = url?.searchParams.get('sort') ?? '';
-    let sortOldest = url?.searchParams.get('sort') === 'asc';
 
     $: {
         if (selectedTitle) {
@@ -58,7 +57,7 @@
             bookType: selectedBookType,
             runTitle: selectedRunTitle,
             runYear: selectedRunYear,
-            sort: sortOldest ? 'asc' : '',
+            sort: selectedSort,
             search
         });
         goto(`?${params.toString()}`);
@@ -159,11 +158,11 @@
             <div class="filterbar-group">
                 <div class="sort-radio-group">
                     <label>
-                        <input type="radio" bind:group={sortOldest} value={false} />
+                        <input type="radio" bind:group={selectedSort} value={false} />
                         Newest First
                     </label>
                     <label>
-                        <input type="radio" bind:group={sortOldest} value={true} />
+                        <input type="radio" bind:group={selectedSort} value={true} />
                         Oldest First
                     </label>
                 </div>
