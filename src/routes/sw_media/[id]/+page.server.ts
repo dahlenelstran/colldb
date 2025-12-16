@@ -1,4 +1,28 @@
 import { pool } from "$lib/server/db";
+import { fail, redirect } from "@sveltejs/kit";
+import type { Actions } from './$types';
+
+export const actions: Actions = {
+    async log(event) {
+        const { request, params } = event;
+        const formData = await request.formData();
+        const { id } = params;
+        const is_completed = formData.get('is_completed')?.toString() === 'on' ? true : false;
+        const is_owned = formData.get('is_owned')?.toString() === 'on' ? true : false;
+
+        try {
+            await pool.query(
+                'UPDATE swmedia SET is_completed = $1, is_owned = $2 WHERE id = $3', 
+                [is_completed, is_owned, id]
+            );
+            return { success: true };
+        }
+        catch (error) {
+            console.error("Error updating media info", error);
+            return fail(500, { error: "Failed to update media information." });
+        }
+    }
+};
 
 export async function load({ params }) { 
     const { id } = params;

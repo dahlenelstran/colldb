@@ -79,6 +79,71 @@ h1, h4 {
     margin-top: 20px;
 }
 
+/* Buttons - Taken from w3schoools */
+
+ /* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 40px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} 
+
 /* Stats */
 
 .stat-header {
@@ -149,6 +214,7 @@ tr:hover {
 }
 
 /* Filters */
+
 .filters {
     background: var(--dark-backdrop);
     border-radius: 10px;
@@ -176,7 +242,7 @@ tr:hover {
     padding: 0.4rem 0.7rem;
     margin-right: 1rem;
     font-size: 1rem;
-    min-width: 80px !important; /* Reduce from 100/120px */
+    min-width: 80px !important;
 }
 
 .filters input[type="checkbox"] {
@@ -236,15 +302,14 @@ tr:hover {
 .aurabesh {
     font-family: 'Aurabesh', 'Segoe UI', Arial, sans-serif;
     transition: font-family 0.2s;
-    font-size: 2rem;           /* or whatever size you want */
-    line-height: 1.2;          /* consistent line height */
-    display: inline-block;     /* prevents inline shift */
-    min-width: 1em;            /* prevents width shrink */
+    font-size: 2rem;
+    line-height: 1.2;
+    display: inline-block;
+    min-width: 1em;
 }
 
 .aurabesh:hover {
     font-family: 'Segoe UI', Arial, sans-serif;
-    /* font-size and line-height remain the same */
 }
 
 /* Navigation Bar */
@@ -262,17 +327,17 @@ tr:hover {
 .navbar-logo {
     height: 40px;
     margin-right: 1rem;
-    flex: none; /* Logo keeps its size */
+    flex: none;
 }
 
 .navbar-links {
     display: flex;
-    flex: 1; /* Take up remaining space */
-    gap: 0;  /* Remove gap between links, or set as desired */
+    flex: 1;
+    gap: 0;
 }
 
 .nav-link {
-    flex: 1; /* Each link takes equal width of navbar-links */
+    flex: 1;
     text-align: center;
     color: var(--blue-accent);
     text-decoration: none;
@@ -489,6 +554,10 @@ tr:hover {
     display: flex;
     opacity: 1;
     pointer-events: auto;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
 }
 .comp-meta > div {
     display: flex;
@@ -498,6 +567,12 @@ tr:hover {
 .comp-info {
     font-weight: 600;
     color: var(--blue-accent);
+}
+
+/* Hidden */
+
+.hidden {
+    visibility: hidden;
 }
 
 /* Filter Bar Component */

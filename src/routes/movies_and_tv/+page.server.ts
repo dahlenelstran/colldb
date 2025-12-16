@@ -67,6 +67,8 @@ export const load: PageServerLoad = async ({ url }) => {
 
         const discsResult = await pool.query(query, values);
 
+        // Sorting results, ignoring "The" at the start of titles
+
         function stripThe(title: string): string {
             return title.replace(/^the\s+/i, '').trim();
         }

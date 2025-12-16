@@ -5,6 +5,11 @@
     export let is_owned = "Is Owned";
     export let is_completed = "Is Completed";
     export let show = "Show";
+    export let release_date = "Release Date";
+
+    $: formattedDate = release_date
+        ? new Date(release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : "";
 </script>
 
 <a class="comp-link-wrapper" href={`/sw_media/${id}`}>
@@ -37,6 +42,9 @@
             <div>
                 <span class="comp-info">Show:</span>
                 <span>{show}</span>
+            </div>
+            <div>
+                <span class="date">{formattedDate}</span>
             </div>
         </div>
     </div>

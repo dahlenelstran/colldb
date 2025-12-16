@@ -18,6 +18,8 @@
     <p><a class="follow-link" href="/lego/stats">Statistics <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
     <p><a class="follow-link" href="/lego/theme">Themes <icon class="nf nf-fa-forward" title="Edit"></icon></a></p>
 
+    <p><a class="follow-link" href="/lego/create">Add a Lego Set</a></p>
+
     <form method="get" class="filters">
         <input type="text" name="search" placeholder="Search by Set Title..." bind:value={search} />
 
@@ -59,6 +61,4 @@
         />
         {/each}
     </div>
-
-    <p><a class="follow-link" href="/lego/create">Add a Lego Set</a></p>
 </div>

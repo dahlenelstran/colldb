@@ -5,6 +5,11 @@
     export let is_owned: boolean = false;
     export let is_completed: boolean = false;
     export let systems: string[] = [];
+    export let release_date = "Release Date";
+
+    $: formattedDate = release_date
+        ? new Date(release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : "";
 </script>
 
 <a class="comp-link-wrapper" href={`/sw_media/${id}`}>
@@ -37,6 +42,9 @@
             <div>
                 <span class="comp-info">System:</span>
                 <span>{systems.join(', ')}</span>
+            </div>
+            <div>
+                <span class="date">{formattedDate}</span>
             </div>
         </div>
     </div>

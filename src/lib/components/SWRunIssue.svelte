@@ -1,4 +1,5 @@
 <script lang="ts">
+    // Figure out how to formatDate without the way it's done now
     import { formatDate } from '$lib/utils/formatDate';
     export let id = "Id";
     export let title = "Title";
@@ -6,8 +7,8 @@
     export let is_completed: boolean = false;
     export let release_date: string = "";
 
-     $: formattedDate = release_date
-        ? new Date(release_date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    $: formattedDate = release_date
+        ? new Date(release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
         : "";
 </script>
 

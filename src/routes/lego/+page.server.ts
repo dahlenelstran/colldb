@@ -32,6 +32,8 @@ export const load: PageServerLoad = async ({ url }) => {
             query += ' WHERE ' + conditions.join(' AND ');
         }
 
+        query += ` ORDER BY year DESC `;
+
         const setsResult = await pool.query(query, values);
         const sets = setsResult.rows;
 

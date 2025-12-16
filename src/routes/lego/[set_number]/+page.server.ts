@@ -23,7 +23,8 @@ export async function load({ params }) {
             theme_title: themeData[0].title,
             licensed: themeData[0].licensed,
             theme_id: themeData[0].id,
-            quantity: setData[0].quantity || 1 // Default to 1 if quantity is not set
+            quantity: setData[0].quantity || 1,
+            built: setData[0].built
         }
 
         return {
@@ -43,7 +44,8 @@ export async function load({ params }) {
             theme_title: "",
             licensed: false,
             theme_id: null,
-            quantity: 0
+            quantity: 0,
+            built: false
         }
 
         return {

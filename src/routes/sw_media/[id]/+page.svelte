@@ -8,7 +8,6 @@
     <p><a class="follow-link" href="/sw_media">Back to all Star Wars Media</a></p>
 
     <h1>{data.media.title}</h1>
-    <p>Type: {data.media.type}</p>
     <table>
         <thead>
             <tr>
@@ -25,16 +24,41 @@
                 <td>Is Canon</td>
                 <td>{data.media.is_canon ? "Yes" : "No"}</td>
             </tr>
-            <tr>
-                <td>Is Owned</td>
-                <td>{data.media.is_owned ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-                <td>Is Completed</td>
-                <td>{data.media.is_completed ? "Yes" : "No"}</td>
-            </tr>
         </tbody>
     </table>
+
+    <h2>Ownership and Completion</h2>
+    <form action="?/log" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        Completed
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" name="is_completed" checked={data.media.is_completed === true}>
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Owned
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" name="is_owned" checked={data.media.is_owned === true}>
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <center>
+            <button type="submit">Save</button>
+        </center>
+    </form>
 
     {#if data.games && data.games.length}
         <h2>Game Details</h2>
@@ -112,5 +136,5 @@
         </table>
     {/if}
 
-    <p><a class="follow-link" href="/swmedia/{data.media.id}/edit">Edit</a></p>
+    <p><a class="follow-link" href="/sw_media/{data.media.id}/edit">Edit</a></p>
 </dev>

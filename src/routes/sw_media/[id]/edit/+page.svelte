@@ -13,7 +13,7 @@
 </script>
 
 <div class="container" style="text-align: center;">
-    <p><a class="follow_link" href="/movies_and_tv/{data.disc.id}">Back to {data.disc.title}</a></p>
+    <p><a class="follow_link" href="/sw_media/{data.media.id}">Back to {data.media.title}</a></p>
 
     <form action="?/edit" method="post">
         <table>

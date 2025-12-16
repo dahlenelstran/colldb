@@ -8,6 +8,8 @@
     import SWSeason from '$lib/components/SWSeason.svelte';
     import SWComic from '$lib/components/SWComic.svelte';
     import SWBook from '$lib/components/SWBook.svelte';
+    import TriSwitch from '$lib/components/TriSwitch.svelte';
+    import Switch from '$lib/components/Switch.svelte';
 
     // Filters
 
@@ -24,6 +26,8 @@
     let selectedTitle = '';
     let selectedRunTitle = '';
     let selectedRunYear = '';
+    let selectedSort = url?.searchParams.get('sort') ?? '';
+    let sortOldest = url?.searchParams.get('sort') === 'asc';
 
     $: {
         if (selectedTitle) {
@@ -54,6 +58,7 @@
             bookType: selectedBookType,
             runTitle: selectedRunTitle,
             runYear: selectedRunYear,
+            sort: sortOldest ? 'asc' : '',
             search
         });
         goto(`?${params.toString()}`);
@@ -69,6 +74,7 @@
             search = '';
             selectedRunTitle = '';
             selectedRunYear = '';
+            selectedSort = '';
         }}
     >
         <span slot="dropdowns">
@@ -81,38 +87,20 @@
                     {/each}
                 </select>
             </div>
+
             <div class="filterbar-group">
                 <label for="canon">Canon:</label>
-                <select id="canon" bind:value={selectedCanon}>
-                    <option value="">All</option>
-                    {#each data.is_canons ?? [] as t}
-                        <option value={t === true ? "true" : t === false ? "false" : t}>
-                            {t === true ? "True" : t === false ? "False" : t}
-                        </option>
-                    {/each}
-                </select>
+                <TriSwitch bind:value={selectedCanon} id="canon-switch" />
             </div>
+
             <div class="filterbar-group">
-                <label for="owned">Owned:</label>
-                <select id="owned" bind:value={selectedOwned}>
-                    <option value="">All</option>
-                    {#each data.is_owneds ?? [] as t}
-                        <option value={t === true ? "true" : t === false ? "false" : t}>
-                            {t === true ? "True" : t === false ? "False" : t}
-                        </option>
-                    {/each}
-                </select>
+                <label for="canon">Completed:</label>
+                <TriSwitch bind:value={selectedCompleted} id="completed-switch" />
             </div>
+
             <div class="filterbar-group">
-                <label for="completed">Completed:</label>
-                <select id="completed" bind:value={selectedCompleted}>
-                    <option value="">All</option>
-                    {#each data.is_completeds ?? [] as t}
-                        <option value={t === true ? "true" : t === false ? "false" : t}>
-                            {t === true ? "True" : t === false ? "False" : t}
-                        </option>
-                    {/each}
-                </select>
+                <label for="canon">Owned:</label>
+                <TriSwitch bind:value={selectedOwned} id="owned-switch" />
             </div>
 
             {#if selectedType === 'game'}
@@ -167,7 +155,21 @@
                     </select>
                 </div>
             {/if}
+
+            <div class="filterbar-group">
+                <div class="sort-radio-group">
+                    <label>
+                        <input type="radio" bind:group={sortOldest} value={false} />
+                        Newest First
+                    </label>
+                    <label>
+                        <input type="radio" bind:group={sortOldest} value={true} />
+                        Oldest First
+                    </label>
+                </div>
+            </div>
         </span>
+
         <span slot="search">
             <input type="text" placeholder="Search by title..." bind:value={search} />
         </span>
@@ -191,6 +193,7 @@
                 is_owned={x.is_owned}
                 is_completed={x.is_completed}
                 systems={x.systems}
+                release_date={x.release_date}
             />
         {:else if x.type === 'tvseason'}
             <SWSeason
@@ -200,6 +203,7 @@
                 is_owned={x.is_owned}
                 is_completed={x.is_completed}
                 show={x.show}
+                release_date={x.release_date}
             />
         {:else if x.type === 'comic'}
             <SWComic
@@ -210,6 +214,7 @@
                 is_canon={x.is_canon}
                 is_owned={x.is_owned}
                 is_completed={x.is_completed}
+                release_date={x.release_date}
             />
         {:else if x.type === 'book'}
             <SWBook
@@ -220,6 +225,7 @@
                 is_canon={x.is_canon}
                 is_owned={x.is_owned}
                 is_completed={x.is_completed}
+                release_date={x.release_date}
             />
         {/if}
 

@@ -14,12 +14,21 @@
 
     <h1>{data.set.set_number} / {data.set.title}</h1>
 
-    <a class="linked-info" href={`/lego/theme_${data.set.theme_id}`}>
+    
+    <a class="linked-info" href={`/lego/theme/${data.set.theme_id}`}>
         <div>
             {data.set.theme_title}
         </div>
     </a>
     
+    <div class="info">
+        {#if data.set.built == false}
+            Not Built
+        {:else}
+            Built
+        {/if}
+    </div>
+
     <div class="info">
         {data.set.pieces} Pieces, {data.set.minifigs} Minifigs
     </div>

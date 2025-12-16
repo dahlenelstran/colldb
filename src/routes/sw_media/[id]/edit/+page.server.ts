@@ -1,4 +1,3 @@
-import type { PageServerLoad } from './$types';
 import { pool } from "$lib/server/db";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from './$types';
@@ -40,14 +39,14 @@ export const actions: Actions = {
             console.error("Error deleting disc", error);
             return fail(500, { error: "Failed to delete disc." });
         }
-        return redirect(303, '/movies_and_tv');
+        return redirect(303, '/swmedia');
     }
 };
 
 export async function load({ params }) { 
     const { id } = params;
     try { 
-        const infoResult = await pool.query('SELECT * FROM moviestv WHERE moviestv.id = $1', [id]);
+        const infoResult = await pool.query('SELECT * FROM moviestv WHERE swmedia.id = $1', [id]);
 
         const info = infoResult.rows;
 

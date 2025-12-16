@@ -5,7 +5,12 @@
     export let is_owned = "Is Owned";
     export let is_completed = "Is Completed";
     export let booktype = "Book Type";
+    export let release_date = "Release Date";
     export let format: string[] = [];
+
+    $: formattedDate = release_date
+        ? new Date(release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : "";
 </script>
 
 <a class="comp-link-wrapper" href={`/sw_media/${id}`}>
@@ -38,10 +43,12 @@
             <div>
                 <span class="comp-info">Format:</span>
                 <span>{format.join(', ')}</span>
-            </div>
-            <div>
+                <span class="hidden">   -----             </span>
                 <span class="comp-info">Type:</span>
                 <span>{booktype}</span>
+            </div>
+            <div>
+                <span class="date">{formattedDate}</span>
             </div>
         </div>
     </div>

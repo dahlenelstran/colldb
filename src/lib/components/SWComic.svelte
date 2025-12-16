@@ -6,6 +6,11 @@
     export let is_completed: boolean = false;
     export let run: string = "Run";
     export let issue: string = "Issue";
+    export let release_date: string = "";
+
+    $: formattedDate = release_date
+        ? new Date(release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : "";
 </script>
 
 <a class="comp-link-wrapper" href={`/sw_media/${id}`}>
@@ -38,10 +43,12 @@
             <div>
                 <span class="comp-info">Run:</span>
                 <span>{run}</span>
-            </div>
-            <div>
+                <span class="hidden">   -----             </span>
                 <span class="comp-info">Issue:</span>
                 <span>{issue}</span>
+            </div>
+            <div>
+                <span class="date">{formattedDate}</span>
             </div>
         </div>
     </div>

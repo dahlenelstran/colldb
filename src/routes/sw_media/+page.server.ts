@@ -44,6 +44,7 @@ export const load: PageServerLoad = async ({ url }) => {
         const bookType = url.searchParams.get('bookType');
         const title = url.searchParams.get('title');
         const show = url.searchParams.get('show');
+        const sort = url.searchParams.get('sort') === 'asc' ? true : url.searchParams.get('sort') === 'desc' ? false : null;
 
         const runTitle = url.searchParams.get('runTitle');
         const runYear = url.searchParams.get('runYear');
@@ -160,14 +161,20 @@ export const load: PageServerLoad = async ({ url }) => {
             swmedia_comic_runs.title,
             swmedia_comic_runs.year,
             swmedia_comics.issue
-            ORDER BY release_date DESC
         `;
+
+        if (sort == true) {
+            query += ` ORDER BY release_date ASC `;
+        }
+
+        if (sort == false) {
+            query += ` ORDER BY release_date DESC `;
+        }
 
         const mediaResult = await pool.query(query, values);
         media = mediaResult.rows;
 
-
-        const comicsResult = await pool.query(`
+        const runsResult = await pool.query(`
             SELECT
                 swmedia_comics.swmedia_id,
                 swmedia_comic_runs.title AS run,
@@ -176,7 +183,7 @@ export const load: PageServerLoad = async ({ url }) => {
             FROM swmedia_comics
             JOIN swmedia_comic_runs ON swmedia_comics.run_id = swmedia_comic_runs.id
         `);
-        const comics = comicsResult.rows;
+        const comics = runsResult.rows;
 
         return { 
             // Filtered results
