@@ -3,6 +3,7 @@
     import type { PageData } from './$types';
     export let data: PageData;
     import LegoTheme from '$lib/components/LegoTheme.svelte';
+    import Grid from '$lib/components/Grid.svelte';
 
     let sortBy: 'alpha' | 'count' = 'alpha';
 
@@ -16,7 +17,7 @@
     });
 </script>
 
-<div class="list">
+<div class="container">
     <div class="back">
         <p><a class="follow-link" href="/lego"><icon class="nf nf-fa-backward" title="Back"></icon> Back to All Themes</a></p>
     </div>
@@ -33,13 +34,15 @@
         </select>
     </label>
 
-    {#each sortedThemes as theme}
-        <LegoTheme
-            title={theme.theme_title}
-            id={theme.theme_id}
-            set_count={theme.set_count}
-            min_year={theme.min_year}
-            max_year={theme.max_year}
-        />
-    {/each}
+    <Grid>
+        {#each sortedThemes as theme}
+            <LegoTheme
+                title={theme.theme_title}
+                id={theme.theme_id}
+                set_count={theme.set_count}
+                min_year={theme.min_year}
+                max_year={theme.max_year}
+            />
+        {/each}
+    </Grid>
 </div>

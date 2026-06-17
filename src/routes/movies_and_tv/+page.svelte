@@ -3,7 +3,8 @@
     import type { PageData } from './$types';
     export let data: PageData;
     import Disc from '$lib/components/Disc.svelte';
-    
+    import Grid from '$lib/components/Grid.svelte';
+
     // Filters
 
     export let url: URL;
@@ -74,7 +75,7 @@
 
     <h4> {data.discs.length} results found</h4>
 
-    <div class="list">
+    <Grid>
         {#each data.discs as x}
 
         <Disc
@@ -87,7 +88,7 @@
             steelbook={x.steelbook}
         />
         {/each}
-    </div>
+    </Grid>
 
     <p><a class="follow-link" href="/movies_and_tv/create">Add a Movie or TV Show</a></p>
 

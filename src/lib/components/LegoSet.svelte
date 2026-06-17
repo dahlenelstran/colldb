@@ -20,11 +20,14 @@
                 </span>
             {/if}
         </div>
-        <div class="comp-meta">
+
+<!--    <div class="comp-meta">
             <div>
                 <span class="comp-info">{pieces}</span> Pieces,
                 <span class="comp-info">{minifigs}</span> Minifigs
             </div>
         </div>
+-->
+
     </div>
 </a>

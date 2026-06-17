@@ -69,9 +69,15 @@ h1, h4 {
 /* Buttons on ID Pages */
 
 .back {
-    padding-left: 100px;
+    margin-left: 100px;
     align-self: start;
-    margin-bottom: 20px;
+    border: 2px solid var(--blue-accent);
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 1px;
+    background-color: var(--dark-backdrop);
 }
 .edit {
     padding-right: 100px;
@@ -470,7 +476,7 @@ tr:hover {
     font-size: 1.3em;
 }
 
-/* SWMedia Components */
+/* Custom Svelte Components */
 
 .comp-link-wrapper {
     text-decoration: none;
@@ -482,6 +488,7 @@ tr:hover {
     margin: 0 auto;
     box-sizing: border-box;
 }
+
 .comp {
     width: 100%;
     display: flex;
@@ -491,20 +498,23 @@ tr:hover {
     padding: 1.2rem 1.5rem;
     border: 1.5px solid var(--blue-accent);
     border-radius: 12px;
-    background: var(--background-color);
+    background: var(--dark-backdrop);
     box-shadow: 0 4px 16px var(--shadows);
     transition: transform 0.15s, box-shadow 0.15s;
     margin: 0;
     box-sizing: border-box;
 }
+
 .comp:hover {
     transform: translateY(-4px) scale(1.03);
     box-shadow: 0 8px 24px var(--shadows);
     border-color: var(--red-accent);
 }
+
 .comp:hover .comp-title {
     color: var(--red-accent);
 }
+
 .comp-title {
     font-weight: bold;
     font-size: 1.25rem;
@@ -519,6 +529,7 @@ tr:hover {
     align-items: center;
     gap: 0.5em;
 }
+
 .comp-header {
     display: flex;
     justify-content: space-between;
@@ -526,6 +537,7 @@ tr:hover {
     width: 100%;
     gap: 1em;
 }
+
 .comp-meta {
     display: none;
     opacity: 0;
@@ -536,6 +548,7 @@ tr:hover {
     font-size: 1.05em;
     color: var(--verylightgrey);
 }
+
 .comp-type {
     font-weight: normal;
     font-style: italic;
@@ -543,12 +556,14 @@ tr:hover {
     font-size: 1.1rem;
     white-space: nowrap;
 }
+
 .comp-badges {
     display: flex;
     gap: 0.5em;
     align-items: center;
     font-size: 1.2em;
 }
+
 .comp:hover .comp-meta,
 .comp:focus-within .comp-meta {
     display: flex;
@@ -559,14 +574,25 @@ tr:hover {
     width: 100%;
     gap: 1em;
 }
+
 .comp-meta > div {
     display: flex;
     gap: 0.3em;
     align-items: center;
 }
+
 .comp-info {
     font-weight: 600;
     color: var(--blue-accent);
+}
+
+.comp-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1.2rem;
 }
 
 /* Hidden */

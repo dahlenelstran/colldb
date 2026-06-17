@@ -58,7 +58,7 @@ export const load: PageServerLoad = async ({ url }) => {
             sets: [],
             yearOptions: [],
             themeOptions: [],
-            error: "Failed to load sets data."
+            error: "Failed to load sets data :("
         };
     }
 }

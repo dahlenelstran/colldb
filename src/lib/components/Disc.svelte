@@ -4,8 +4,6 @@
     export let id = "Id";
     export let watched: boolean = false;
     export let type: string = "Type";
-    export let label: string = "";
-    export let steelbook: boolean = false;
 </script>
 
 <a class="comp-link-wrapper" href={`/movies_and_tv/${id}`}>
@@ -27,14 +25,5 @@
                 {/if}
             </span>
         </div>
-        {#if label || steelbook}
-        <div class="comp-meta">
-            {#if label && steelbook}
-                <span class="comp-info">{label} Steelbook</span>
-            {:else}
-                <span class="comp-info">{label}{steelbook ? ' Steelbook' : ''}</span>
-            {/if}
-        </div>
-        {/if}
     </div>
 </a>

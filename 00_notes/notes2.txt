@@ -1,0 +1,14 @@
+TRACK
+- lego
+- sw figs
+- nonsw figs
+- MAYBE movies
+
+FEATURES
+- partition figures for x shelves given certain tags per "grouping"
+- stats for all 4
+- figure id coorseponds to id on accessories tag in tackle box
+-- eventually, would be nice to have cyberdeck console in living room that would let me select a figure, and then it would light up the figure on the shelf, as well as the accessories in the box
+- Moves and TV page simulate the shelves, like have everything in alphabetical order
+- display figures either in a list with no photos, or a grid layout with photos
+- Have the titles start in aurabesh but animate into english instead of having to hover

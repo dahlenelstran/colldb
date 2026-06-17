@@ -32,7 +32,7 @@ export async function load({ params }) {
         }
     }
     catch (error) {
-        console.error("Error fetching set info");
+        console.error("Error fetching set info :(");
 
         const set = {
             title: "",

@@ -2,6 +2,7 @@
     import "$lib/assets/css/global.css";
     import type { PageData } from "../[id]/$types";
     import LegoSet from '$lib/components/LegoSet.svelte';
+    import Grid from '$lib/components/Grid.svelte';
     export let data: PageData;
 </script>
 
@@ -16,7 +17,7 @@
 
     <h4>{data.sets.length} Sets Owned</h4>
 
-    <div class="list">
+    <Grid>
         {#each data.sets as x}
         <LegoSet
             set_number = {x.set_number}
@@ -26,5 +27,5 @@
             pieces = {x.pieces}
         />
         {/each}
-    </div>
+    </Grid>
 </div>

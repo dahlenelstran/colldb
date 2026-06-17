@@ -3,6 +3,7 @@
     import type { PageData } from './$types';
     export let data: PageData;
     import LegoSet from '$lib/components/LegoSet.svelte';
+    import Grid from '$lib/components/Grid.svelte';
 
     export let url: URL;
     let selectedYear = url?.searchParams.get('year') ?? '';
@@ -49,7 +50,7 @@
 
     <h4>{data.sets.length} results found</h4>
     
-    <div class="list">
+    <Grid>
         {#each data.sets as x}
         <LegoSet
             set_number = {x.set_number}
@@ -60,5 +61,5 @@
             pieces = {x.pieces}
         />
         {/each}
-    </div>
+    </Grid>
 </div>
